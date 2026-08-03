@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node env-run.js .env.local next dev",
     "build": "next build",
-    "start": "next start",
+    "prestart": "node env-run.js .env.qa next build",
+    "start": "node env-run.js .env.qa next start",
     "lint": "eslint"
   },
   "dependencies": {

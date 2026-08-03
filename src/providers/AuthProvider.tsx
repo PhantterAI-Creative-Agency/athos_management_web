@@ -73,7 +73,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     clearClientSession();
     queryClient.clear();
     setUser(null);
-    router.push("/login");
+    router.push("/home");
   }, [router, queryClient]);
 
   useEffect(() => {

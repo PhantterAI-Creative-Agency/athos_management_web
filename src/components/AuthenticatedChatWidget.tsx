@@ -3,10 +3,14 @@
 import { useAuth } from "@/hooks/useAuth";
 import { ChatWidget } from "@/components/ChatWidget";
 
+const CHURCH_SLUG = process.env.NEXT_PUBLIC_CHURCH_SLUG ?? "principios-de-vida";
+
 export function AuthenticatedChatWidget() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
 
-  if (!user) return null;
+  if (isLoading) return null;
 
-  return <ChatWidget mode="authenticated" />;
+  if (user) return <ChatWidget mode="authenticated" />;
+
+  return <ChatWidget mode="guest" churchSlug={CHURCH_SLUG} />;
 }
