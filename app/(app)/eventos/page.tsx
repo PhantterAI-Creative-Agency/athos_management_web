@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { EventCard } from "@/components/events/EventCard";
-import { AuthGuard } from "@/components/AuthGuard";
 import { listEvents, listMyRegistrations } from "@/api-client/events";
 import type { EventDTO } from "@/api-client/events";
 import { formatEventSchedule } from "@/lib/date";
@@ -103,10 +102,8 @@ function EventosContent() {
 
 export default function EventosPage() {
   return (
-    <AuthGuard>
-      <AppShell active="/eventos">
-        <EventosContent />
-      </AppShell>
-    </AuthGuard>
+    <AppShell active="/eventos">
+      <EventosContent />
+    </AppShell>
   );
 }

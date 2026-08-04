@@ -3,7 +3,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
 import { CoverImage } from "@/components/ui/CoverImage";
-import { AuthGuard } from "@/components/AuthGuard";
 import { useAuth } from "@/hooks/useAuth";
 import { listPlans } from "@/api-client/plans";
 import { listMinistries } from "@/api-client/ministries";
@@ -84,10 +83,8 @@ function DescubraContent() {
 
 export default function DescubraPage() {
   return (
-    <AuthGuard>
-      <AppShell active="/descubra">
-        <DescubraContent />
-      </AppShell>
-    </AuthGuard>
+    <AppShell active="/descubra">
+      <DescubraContent />
+    </AppShell>
   );
 }

@@ -5,7 +5,6 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
 import { CoverImage } from "@/components/ui/CoverImage";
 import { Tag } from "@/components/ui/Tag";
-import { AuthGuard } from "@/components/AuthGuard";
 import { useAuth } from "@/hooks/useAuth";
 import { listMural, createMuralPost, toggleMuralLike, deleteMuralPost } from "@/api-client/mural";
 import { HeartIcon } from "@/components/icons";
@@ -147,10 +146,8 @@ function MuralContent() {
 
 export default function MuralPage() {
   return (
-    <AuthGuard>
-      <AppShell active="/mural">
-        <MuralContent />
-      </AppShell>
-    </AuthGuard>
+    <AppShell active="/mural">
+      <MuralContent />
+    </AppShell>
   );
 }
