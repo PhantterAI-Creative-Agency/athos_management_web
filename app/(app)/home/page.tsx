@@ -93,7 +93,7 @@ function ContactSection({
   address: string;
 }) {
   return (
-    <section className="bg-surface">
+    <section className="bg-background">
       <div className="mx-auto max-w-3xl px-5 py-10 md:max-w-5xl md:px-12 md:py-16">
         <h3 className="text-center text-section-title font-semibold md:text-3xl">Fale Conosco</h3>
 
@@ -301,7 +301,7 @@ function HomeContent() {
       )}
 
       {latestDevotionals && latestDevotionals.length > 0 && (
-        <Reveal as="section" className="bg-background" id="devocionais">
+        <Reveal as="section" className="bg-surface" id="devocionais">
           <div className="mx-auto max-w-3xl px-5 py-7 pb-10 md:max-w-5xl md:px-12 md:pb-10">
             <div className="mb-5 flex items-baseline justify-between">
               <SectionTitle>Devocionais</SectionTitle>
