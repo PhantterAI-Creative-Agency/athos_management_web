@@ -5,6 +5,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
 import { CoverImage } from "@/components/ui/CoverImage";
 import { Tag } from "@/components/ui/Tag";
+import { AuthGuard } from "@/components/AuthGuard";
 import { useAuth } from "@/hooks/useAuth";
 import { listFriends, sendFriendRequest, acceptFriendRequest, removeFriend } from "@/api-client/friends";
 
@@ -138,8 +139,10 @@ function ComunidadeContent() {
 
 export default function ComunidadePage() {
   return (
-    <AppShell active="/comunidade">
-      <ComunidadeContent />
-    </AppShell>
+    <AuthGuard>
+      <AppShell active="/comunidade">
+        <ComunidadeContent />
+      </AppShell>
+    </AuthGuard>
   );
 }

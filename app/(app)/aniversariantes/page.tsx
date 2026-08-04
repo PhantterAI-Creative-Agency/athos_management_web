@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
 import { CoverImage } from "@/components/ui/CoverImage";
+import { AuthGuard } from "@/components/AuthGuard";
 import { useAuth } from "@/hooks/useAuth";
 import { listUsers } from "@/api-client/users";
 
@@ -92,8 +93,10 @@ function AniversariantesContent() {
 
 export default function AniversariantesPage() {
   return (
-    <AppShell active="/aniversariantes">
-      <AniversariantesContent />
-    </AppShell>
+    <AuthGuard>
+      <AppShell active="/aniversariantes">
+        <AniversariantesContent />
+      </AppShell>
+    </AuthGuard>
   );
 }

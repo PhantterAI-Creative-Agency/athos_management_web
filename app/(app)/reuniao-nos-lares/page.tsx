@@ -6,6 +6,7 @@ import { AppShell } from "@/components/ui/AppShell";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { CoverImage } from "@/components/ui/CoverImage";
 import { Tag } from "@/components/ui/Tag";
+import { AuthGuard } from "@/components/AuthGuard";
 import { useChurchSettings } from "@/hooks/useChurchSettings";
 import { listGrowthGroups } from "@/api-client/growthGroups";
 
@@ -72,8 +73,10 @@ function GcContent() {
 
 export default function GcPage() {
   return (
-    <AppShell active="/reuniao-nos-lares">
-      <GcContent />
-    </AppShell>
+    <AuthGuard>
+      <AppShell active="/reuniao-nos-lares">
+        <GcContent />
+      </AppShell>
+    </AuthGuard>
   );
 }
