@@ -8,6 +8,7 @@ import { EventCard } from "@/components/events/EventCard";
 import { AuthGuard } from "@/components/AuthGuard";
 import { listEvents, listMyRegistrations } from "@/api-client/events";
 import type { EventDTO } from "@/api-client/events";
+import { formatEventSchedule } from "@/lib/date";
 
 const MONTHS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
@@ -46,7 +47,7 @@ function EventosContent() {
         day,
         month,
         status: "inscricoes",
-        schedule: new Date(ev.date).toLocaleDateString("pt-BR", { weekday: "short", day: "numeric", month: "short" }),
+        schedule: formatEventSchedule(ev.date),
       });
     }
   } else if (registrations) {
@@ -59,7 +60,7 @@ function EventosContent() {
           day,
           month,
           status: tab === "Participando" ? "participando" : "participou",
-          schedule: new Date(evMatch.date).toLocaleDateString("pt-BR", { weekday: "short", day: "numeric", month: "short" }),
+          schedule: formatEventSchedule(evMatch.date),
         });
       }
     }

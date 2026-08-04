@@ -41,6 +41,12 @@ export interface ChurchSettingsDTO {
   growthGroupAcronym: string;
 }
 
+export interface ChurchServiceScheduleDTO {
+  day: string;
+  time: string;
+  theme: string;
+}
+
 export interface ChurchDTO {
   id: string;
   name: string;
@@ -50,6 +56,7 @@ export interface ChurchDTO {
   settings: ChurchSettingsDTO;
   homeContent?: ChurchHomeContentDTO;
   contact?: ChurchContactDTO;
+  serviceSchedule?: ChurchServiceScheduleDTO[];
   createdAt: string;
 }
 

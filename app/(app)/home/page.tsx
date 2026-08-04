@@ -17,8 +17,10 @@ import { listMedia, getPublicMedia, type MediaDTO } from "@/api-client/media";
 import { listMinistries, getPublicMinistries, type MinistryDTO } from "@/api-client/ministries";
 import { getMyChurch, getPublicChurch } from "@/api-client/churches";
 import { getUser } from "@/api-client/users";
+import { formatEventSchedule } from "@/lib/date";
 import type { AuthenticatedUserDTO } from "@/api-client/auth";
-import { ChevronRightIcon, MailIcon, WhatsappIcon, PinIcon } from "@/components/icons";
+import { ChevronRightIcon, MailIcon, WhatsappIcon, PinIcon, ClockIcon } from "@/components/icons";
+import type { ChurchServiceScheduleDTO } from "@/api-client/churches";
 import { canViewMinistryVolunteerCount } from "@/lib/rbac";
 
 const CHURCH_SLUG = process.env.NEXT_PUBLIC_CHURCH_SLUG ?? "principios-de-vida";
@@ -105,6 +107,27 @@ function MinistriesSection({ items, user }: { items: MinistryDTO[]; user: Authen
         ))}
       </RevealStagger>
     </div>
+  );
+}
+
+function ServiceScheduleSection({ items }: { items: ChurchServiceScheduleDTO[] }) {
+  return (
+    <RevealStagger className="mb-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+      {items.map((item, index) => (
+        <RevealItem
+          key={`${item.day}-${item.time}-${index}`}
+          className="flex items-center gap-3 rounded-lg bg-surface px-4 py-3"
+        >
+          <ClockIcon className="h-5 w-5 flex-none text-accent" />
+          <div className="min-w-0">
+            <p className="text-sm font-semibold leading-tight">
+              {item.day} · {item.time}
+            </p>
+            <p className="truncate text-xs text-text-muted">{item.theme}</p>
+          </div>
+        </RevealItem>
+      ))}
+    </RevealStagger>
   );
 }
 
@@ -249,6 +272,10 @@ function HomeContent() {
           </div>
           <p className="mb-5 text-sm text-text-muted">{dateStr}</p>
 
+          {church?.serviceSchedule && church.serviceSchedule.length > 0 && (
+            <ServiceScheduleSection items={church.serviceSchedule} />
+          )}
+
           {bannerEvent && (
             <Link href={`/eventos`}>
               <CoverImage
@@ -261,7 +288,7 @@ function HomeContent() {
                   <div>
                     <p className="label-caps mb-1 text-white/85">{bannerEvent.title}</p>
                     <p className="text-lg font-semibold text-white">
-                      {bannerEvent.date ? new Date(bannerEvent.date).toLocaleDateString("pt-BR") : ""}
+                      {bannerEvent.date ? formatEventSchedule(bannerEvent.date) : ""}
                       {bannerEvent.location && ` · ${bannerEvent.location}`}
                     </p>
                   </div>
@@ -285,7 +312,7 @@ function HomeContent() {
                 <RevealItem key={item.id} className="w-[260px] flex-none snap-start md:w-[300px]">
                   <CoverImage label={item.title} seed={`event-${item.id}`} className="aspect-video rounded-lg" />
                   <p className="mb-0.5 mt-2 text-[10px] uppercase tracking-wide text-accent md:text-xs">
-                    {new Date(item.date).toLocaleDateString("pt-BR")}
+                    {formatEventSchedule(item.date)}
                     {item.location && ` · ${item.location}`}
                   </p>
                   <p className="text-[11px] font-semibold leading-tight md:text-sm">{item.title}</p>
@@ -324,6 +351,10 @@ function HomeContent() {
                   />
                   <p className="mt-3 text-sm font-semibold leading-tight text-white md:text-base">
                     {item.title}
+                  </p>
+                  <p className="mt-1 text-xs text-white/70 md:text-sm">
+                    {formatEventSchedule(item.date)}
+                    {item.location && ` · ${item.location}`}
                   </p>
                 </RevealItem>
               ))}
