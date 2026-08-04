@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
 import { CoverImage } from "@/components/ui/CoverImage";
@@ -16,6 +16,7 @@ import { listDevotionals, getPublicDevotionals } from "@/api-client/devotionals"
 import { listMedia, getPublicMedia, type MediaDTO } from "@/api-client/media";
 import { getMyChurch, getPublicChurch } from "@/api-client/churches";
 import { getUser } from "@/api-client/users";
+import { sendContactMessage } from "@/api-client/contact";
 import { ChevronRightIcon, MailIcon, WhatsappIcon, PinIcon } from "@/components/icons";
 
 const CHURCH_SLUG = process.env.NEXT_PUBLIC_CHURCH_SLUG ?? "principios-de-vida";
@@ -92,17 +93,55 @@ function ContactSection({
   whatsapp: string;
   address: string;
 }) {
+  const [name, setName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMessage("");
+    try {
+      await sendContactMessage({ name, email: contactEmail, phone, message });
+      setStatus("success");
+      setName("");
+      setContactEmail("");
+      setPhone("");
+      setMessage("");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Erro ao enviar mensagem";
+      setErrorMessage(msg);
+      setStatus("error");
+    }
+  }
+
   return (
     <section className="bg-surface">
       <div className="mx-auto max-w-3xl px-5 py-10 md:max-w-5xl md:px-12 md:py-16">
         <h3 className="text-center text-section-title font-semibold md:text-3xl">Fale Conosco</h3>
 
         <div className="mt-8 grid grid-cols-1 gap-10 md:mt-12 md:grid-cols-[1.3fr_1px_1fr]">
-          <form className="flex flex-col gap-3.5">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
+            {status === "success" && (
+              <div className="rounded-lg bg-green-50 px-4 py-3 text-sm text-green-700">
+                Mensagem enviada com sucesso!
+              </div>
+            )}
+            {status === "error" && (
+              <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
+                {errorMessage}
+              </div>
+            )}
             <input
               type="text"
               name="name"
               placeholder="Nome"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="rounded-lg border border-divider bg-background px-4 py-3 text-sm text-foreground placeholder:text-text-muted focus:border-accent focus:outline-none"
             />
             <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
@@ -110,12 +149,17 @@ function ContactSection({
                 type="email"
                 name="email"
                 placeholder="Email"
+                required
+                value={contactEmail}
+                onChange={(e) => setContactEmail(e.target.value)}
                 className="rounded-lg border border-divider bg-background px-4 py-3 text-sm text-foreground placeholder:text-text-muted focus:border-accent focus:outline-none"
               />
               <input
                 type="tel"
                 name="phone"
                 placeholder="Telefone/Whatsapp"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 className="rounded-lg border border-divider bg-background px-4 py-3 text-sm text-foreground placeholder:text-text-muted focus:border-accent focus:outline-none"
               />
             </div>
@@ -123,10 +167,19 @@ function ContactSection({
               name="message"
               placeholder="Mensagem"
               rows={5}
+              required
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
               className="resize-none rounded-lg border border-divider bg-background px-4 py-3 text-sm text-foreground placeholder:text-text-muted focus:border-accent focus:outline-none"
             />
-            <Button type="submit" variant="pill-solid" tone="accent" className="mt-1.5">
-              Enviar
+            <Button
+              type="submit"
+              variant="pill-solid"
+              tone="accent"
+              className="mt-1.5"
+              disabled={status === "loading"}
+            >
+              {status === "loading" ? "Enviando..." : "Enviar"}
             </Button>
           </form>
 
