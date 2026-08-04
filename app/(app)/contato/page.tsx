@@ -43,13 +43,17 @@ function ContatoContent() {
       </Reveal>
 
       <section className="bg-surface">
-        <div className="mx-auto max-w-3xl px-5 pb-14 md:max-w-5xl md:px-12">
+        <div className="mx-auto max-w-3xl px-5 py-10 md:max-w-5xl md:px-12 md:py-16">
           <div className="grid grid-cols-1 gap-10 md:grid-cols-[1.3fr_1px_1fr]">
-            <ContactForm />
+            <div>
+              <h3 className="mb-5 text-section-title font-semibold">Envie uma mensagem</h3>
+              <ContactForm />
+            </div>
 
             <div className="hidden bg-divider md:block" />
 
             <div className="flex flex-col gap-6">
+              <h3 className="text-section-title font-semibold">Informações de contato</h3>
               <div className="flex items-start gap-3">
                 <MailIcon className="mt-0.5 h-5 w-5 flex-none text-accent" />
                 <div>
