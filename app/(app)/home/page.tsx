@@ -135,6 +135,8 @@ function HomeContent() {
   const { user } = useAuth();
   const today = new Date();
   const dateStr = `${dayNames[today.getDay()]}, ${today.getDate()} de ${monthNames[today.getMonth()]}`;
+  const hour = today.getHours();
+  const greeting = hour < 6 ? "Boa Madrugada" : hour < 12 ? "Bom dia" : hour < 18 ? "Boa tarde" : "Boa noite";
 
   const { data: profile } = useQuery({
     queryKey: ["user", user?.id],
@@ -213,7 +215,7 @@ function HomeContent() {
       <Reveal as="section" className="bg-background">
         <div className="mx-auto max-w-3xl px-5 pb-8 pt-6 md:max-w-5xl md:px-12 md:py-10">
           <div className="mb-1">
-            <p className="text-[22px] font-semibold">Bom dia, {(profile?.name || user?.name)?.split(" ")[0] || "Querido(a)"}</p>
+            <p className="text-[22px] font-semibold">{greeting}, {(profile?.name || user?.name)?.split(" ")[0] || "Querido(a)"}</p>
           </div>
           <p className="mb-5 text-sm text-text-muted">{dateStr}</p>
 
