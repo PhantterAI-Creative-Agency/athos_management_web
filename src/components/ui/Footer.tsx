@@ -31,7 +31,7 @@ const footerColumns: FooterColumn[] = [
       { label: "Calendário", href: "/eventos" },
       { label: "Eventos em destaque", href: "/eventos" },
       { label: "Escolas", href: "#" },
-      { label: "Contate-nos", href: "/home#contato" },
+      { label: "Contate-nos", href: "/contato" },
     ],
   },
   {

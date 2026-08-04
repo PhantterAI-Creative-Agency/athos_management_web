@@ -7,9 +7,9 @@ import { AppShell } from "@/components/ui/AppShell";
 import { CoverImage } from "@/components/ui/CoverImage";
 import { Tag } from "@/components/ui/Tag";
 import { YouTubeEmbed } from "@/components/ui/YouTubeEmbed";
-import { Button } from "@/components/ui/Button";
 import { Footer } from "@/components/ui/Footer";
 import { Reveal, RevealStagger, RevealItem } from "@/components/ui/Reveal";
+import { ContactForm } from "@/components/contact/ContactForm";
 import { useAuth } from "@/hooks/useAuth";
 import { listEvents, getPublicEvents } from "@/api-client/events";
 import { listDevotionals, getPublicDevotionals } from "@/api-client/devotionals";
@@ -98,37 +98,7 @@ function ContactSection({
         <h3 className="text-center text-section-title font-semibold md:text-3xl">Fale Conosco</h3>
 
         <div className="mt-8 grid grid-cols-1 gap-10 md:mt-12 md:grid-cols-[1.3fr_1px_1fr]">
-          <form className="flex flex-col gap-3.5">
-            <input
-              type="text"
-              name="name"
-              placeholder="Nome"
-              className="rounded-lg border border-divider bg-background px-4 py-3 text-sm text-foreground placeholder:text-text-muted focus:border-accent focus:outline-none"
-            />
-            <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                className="rounded-lg border border-divider bg-background px-4 py-3 text-sm text-foreground placeholder:text-text-muted focus:border-accent focus:outline-none"
-              />
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Telefone/Whatsapp"
-                className="rounded-lg border border-divider bg-background px-4 py-3 text-sm text-foreground placeholder:text-text-muted focus:border-accent focus:outline-none"
-              />
-            </div>
-            <textarea
-              name="message"
-              placeholder="Mensagem"
-              rows={5}
-              className="resize-none rounded-lg border border-divider bg-background px-4 py-3 text-sm text-foreground placeholder:text-text-muted focus:border-accent focus:outline-none"
-            />
-            <Button type="submit" variant="pill-solid" tone="accent" className="mt-1.5">
-              Enviar
-            </Button>
-          </form>
+          <ContactForm />
 
           <div className="hidden bg-divider md:block" />
 

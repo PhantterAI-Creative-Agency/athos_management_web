@@ -15,9 +15,24 @@ export interface ChurchHomeContentDTO {
   bannerEventId?: string;
 }
 
+export type SocialPlatform =
+  | "facebook"
+  | "instagram"
+  | "twitter"
+  | "linkedin"
+  | "youtube"
+  | "spotify"
+  | "applemusic";
+
+export interface SocialLinkDTO {
+  platform: SocialPlatform;
+  url: string;
+}
+
 export interface ChurchContactDTO {
   email?: string;
   whatsapp?: string;
+  socialLinks?: SocialLinkDTO[];
 }
 
 export interface ChurchSettingsDTO {
