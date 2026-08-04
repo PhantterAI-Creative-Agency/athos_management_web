@@ -5,9 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { EventCard } from "@/components/events/EventCard";
-import { listEvents, listMyRegistrations } from "@/api-client/events";
+import { useAuth } from "@/hooks/useAuth";
+import { listEvents, listMyRegistrations, getPublicEvents } from "@/api-client/events";
 import type { EventDTO } from "@/api-client/events";
 import { formatEventSchedule } from "@/lib/date";
+
+const CHURCH_SLUG = process.env.NEXT_PUBLIC_CHURCH_SLUG ?? "principios-de-vida";
 
 const MONTHS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
@@ -23,17 +26,18 @@ const statusMap: Record<string, string> = {
 };
 
 function EventosContent() {
+  const { user } = useAuth();
   const [tab, setTab] = useState("Inscrições");
 
   const { data: events } = useQuery({
-    queryKey: ["events", "upcoming"],
-    queryFn: () => listEvents(true),
+    queryKey: ["events", "upcoming", user?.id],
+    queryFn: () => (user ? listEvents(true) : getPublicEvents(CHURCH_SLUG)),
   });
 
   const { data: registrations } = useQuery({
     queryKey: ["registrations", statusMap[tab]],
     queryFn: () => listMyRegistrations(statusMap[tab]),
-    enabled: tab !== "Inscrições",
+    enabled: tab !== "Inscrições" && !!user,
   });
 
   const displayEvents: (EventDTO & { day?: string; month?: string; status?: string; schedule?: string })[] = [];
