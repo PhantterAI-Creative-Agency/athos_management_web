@@ -74,7 +74,7 @@ const tabBarLinks = [
   { label: "Comunidade", href: "/comunidade", icon: UsersIcon, authOnly: true },
   { label: "Planos", href: "/planos", icon: CoinIcon, authOnly: true },
   { label: "Contato", href: "/contato", icon: MailIcon, authOnly: false },
-  { label: "Perfil", href: "/perfil", icon: IdCardIcon, authOnly: true },
+  { label: "Perfil", href: "/perfil", icon: IdCardIcon, authOnly: false },
 ];
 
 export function AppShell({
@@ -141,16 +141,28 @@ export function AppShell({
           />
         </Link>
         <nav className="flex gap-8">
-          {heroSectionLinks.map((link) => (
-            <button
-              key={link.id}
-              type="button"
-              onClick={() => handleSectionNavClick(link.id)}
-              className="label-caps text-text-muted transition-colors hover:text-foreground"
-            >
-              {link.label}
-            </button>
-          ))}
+          {isHome
+            ? heroSectionLinks.map((link) => (
+                <button
+                  key={link.id}
+                  type="button"
+                  onClick={() => handleSectionNavClick(link.id)}
+                  className="label-caps text-text-muted transition-colors hover:text-foreground"
+                >
+                  {link.label}
+                </button>
+              ))
+            : tabBarLinks
+                .filter((link) => !link.authOnly || user)
+                .map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.label === "Perfil" && !user ? "/login" : link.href}
+                    className="label-caps text-text-muted transition-colors hover:text-foreground"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
         </nav>
         <div className="flex items-center gap-3.5">
           {user ? (
@@ -262,10 +274,11 @@ export function AppShell({
           .map((link) => {
           const Icon = link.icon;
           const isActive = link.href === active;
+          const href = link.label === "Perfil" && !user ? "/login" : link.href;
           return (
             <Link
               key={link.href}
-              href={link.href}
+              href={href}
               className={`flex flex-col items-center gap-1 ${
                 isActive ? "text-accent" : "text-text-muted"
               }`}
