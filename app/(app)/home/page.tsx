@@ -14,6 +14,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { listEvents, getPublicEvents } from "@/api-client/events";
 import { listDevotionals, getPublicDevotionals } from "@/api-client/devotionals";
 import { listMedia, getPublicMedia, type MediaDTO } from "@/api-client/media";
+import { listMinistries, getPublicMinistries, type MinistryDTO } from "@/api-client/ministries";
 import { getMyChurch, getPublicChurch } from "@/api-client/churches";
 import { getUser } from "@/api-client/users";
 import { ChevronRightIcon, MailIcon, WhatsappIcon, PinIcon } from "@/components/icons";
@@ -79,6 +80,26 @@ function MediaCarousel({ items }: { items: MediaDTO[] }) {
       >
         <ChevronRightIcon className="h-4 w-4" />
       </button>
+    </div>
+  );
+}
+
+function MinistriesSection({ items }: { items: MinistryDTO[] }) {
+  return (
+    <div className="mx-auto max-w-3xl px-5 py-7 md:max-w-5xl md:px-12">
+      <div className="mb-2 flex items-baseline justify-between">
+        <SectionTitle>Ministérios</SectionTitle>
+        <Link href="/ministerios" className="text-xs text-accent">Ver tudo</Link>
+      </div>
+      <RevealStagger className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
+        {items.map((ministry) => (
+          <RevealItem key={ministry.id}>
+            <CoverImage label={ministry.name} seed={`ministry-${ministry.id}`} className="h-[100px]" />
+            <p className="mb-1.5 mt-2 font-semibold leading-tight">{ministry.name}</p>
+            <Tag>{ministry.participantsCount} voluntários</Tag>
+          </RevealItem>
+        ))}
+      </RevealStagger>
     </div>
   );
 }
@@ -162,6 +183,11 @@ function HomeContent() {
   const { data: church } = useQuery({
     queryKey: ["churches", user ? "me" : "public", user?.id],
     queryFn: () => (user ? getMyChurch() : getPublicChurch(CHURCH_SLUG)),
+  });
+
+  const { data: ministries } = useQuery({
+    queryKey: ["ministries", user?.id],
+    queryFn: () => (user ? listMinistries(user.id) : getPublicMinistries(CHURCH_SLUG)),
   });
 
   const homeContent = church?.homeContent;
@@ -341,6 +367,12 @@ function HomeContent() {
               ))}
             </RevealStagger>
           </div>
+        </Reveal>
+      )}
+
+      {ministries && ministries.length > 0 && (
+        <Reveal as="section" className="bg-surface" id="ministerios">
+          <MinistriesSection items={ministries} />
         </Reveal>
       )}
 

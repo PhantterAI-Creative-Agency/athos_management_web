@@ -26,6 +26,7 @@ const heroSectionLinks = [
   { label: "Eventos", id: "eventos" },
   { label: "Mídias", id: "midias" },
   { label: "Devocionais", id: "devocionais" },
+  { label: "Ministérios", id: "ministerios" },
   { label: "Contato", id: "contato" },
 ];
 

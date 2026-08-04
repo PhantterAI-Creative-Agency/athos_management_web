@@ -27,6 +27,10 @@ export function listMinistries(highlightUserId?: string): Promise<MinistryDTO[]>
   return api.get<MinistryDTO[]>("/ministries", { params });
 }
 
+export function getPublicMinistries(slug: string): Promise<MinistryDTO[]> {
+  return api.get<MinistryDTO[]>(`/public/churches/${slug}/ministries`);
+}
+
 export function getMinistry(id: string): Promise<MinistryDTO> {
   return api.get<MinistryDTO>(`/ministries/${id}`);
 }
