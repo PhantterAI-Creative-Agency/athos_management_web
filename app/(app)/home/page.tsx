@@ -112,22 +112,25 @@ function MinistriesSection({ items, user }: { items: MinistryDTO[]; user: Authen
 
 function ServiceScheduleSection({ items }: { items: ChurchServiceScheduleDTO[] }) {
   return (
-    <RevealStagger className="mb-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-      {items.map((item, index) => (
-        <RevealItem
-          key={`${item.day}-${item.time}-${index}`}
-          className="flex items-center gap-3 rounded-lg bg-surface px-4 py-3"
-        >
-          <ClockIcon className="h-5 w-5 flex-none text-accent" />
-          <div className="min-w-0">
-            <p className="text-sm font-semibold leading-tight">
-              {item.day} · {item.time}
-            </p>
-            <p className="truncate text-xs text-text-muted">{item.theme}</p>
-          </div>
-        </RevealItem>
-      ))}
-    </RevealStagger>
+    <div className="mb-6">
+      <SectionTitle>Nossos Cultos</SectionTitle>
+      <RevealStagger className="mt-2 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+        {items.map((item, index) => (
+          <RevealItem
+            key={`${item.day}-${item.time}-${index}`}
+            className="flex items-center gap-3 rounded-lg bg-surface px-4 py-3"
+          >
+            <ClockIcon className="h-5 w-5 flex-none text-accent" />
+            <div className="min-w-0">
+              <p className="text-sm font-semibold leading-tight">
+                {item.day} · {item.time}
+              </p>
+              <p className="truncate text-xs text-text-muted">{item.theme}</p>
+            </div>
+          </RevealItem>
+        ))}
+      </RevealStagger>
+    </div>
   );
 }
 
