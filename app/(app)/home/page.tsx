@@ -17,7 +17,9 @@ import { listMedia, getPublicMedia, type MediaDTO } from "@/api-client/media";
 import { listMinistries, getPublicMinistries, type MinistryDTO } from "@/api-client/ministries";
 import { getMyChurch, getPublicChurch } from "@/api-client/churches";
 import { getUser } from "@/api-client/users";
+import type { AuthenticatedUserDTO } from "@/api-client/auth";
 import { ChevronRightIcon, MailIcon, WhatsappIcon, PinIcon } from "@/components/icons";
+import { canViewMinistryVolunteerCount } from "@/lib/rbac";
 
 const CHURCH_SLUG = process.env.NEXT_PUBLIC_CHURCH_SLUG ?? "principios-de-vida";
 
@@ -84,7 +86,7 @@ function MediaCarousel({ items }: { items: MediaDTO[] }) {
   );
 }
 
-function MinistriesSection({ items }: { items: MinistryDTO[] }) {
+function MinistriesSection({ items, user }: { items: MinistryDTO[]; user: AuthenticatedUserDTO | null }) {
   return (
     <div className="mx-auto max-w-3xl px-5 py-7 md:max-w-5xl md:px-12">
       <div className="mb-2 flex items-baseline justify-between">
@@ -96,7 +98,9 @@ function MinistriesSection({ items }: { items: MinistryDTO[] }) {
           <RevealItem key={ministry.id}>
             <CoverImage label={ministry.name} seed={`ministry-${ministry.id}`} className="h-[100px]" />
             <p className="mb-1.5 mt-2 font-semibold leading-tight">{ministry.name}</p>
-            <Tag>{ministry.participantsCount} voluntários</Tag>
+            {canViewMinistryVolunteerCount(user, ministry.id) && (
+              <Tag>{ministry.participantsCount} voluntários</Tag>
+            )}
           </RevealItem>
         ))}
       </RevealStagger>
@@ -372,7 +376,7 @@ function HomeContent() {
 
       {ministries && ministries.length > 0 && (
         <Reveal as="section" className="bg-surface" id="ministerios">
-          <MinistriesSection items={ministries} />
+          <MinistriesSection items={ministries} user={user} />
         </Reveal>
       )}
 

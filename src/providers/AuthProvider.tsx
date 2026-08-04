@@ -27,6 +27,8 @@ export const AuthContext = createContext<AuthContextValue>({
   logout: async () => {},
 });
 
+const USER_STORAGE_KEY = "authUser";
+
 function clearClientSession() {
   clearTokens();
 
@@ -42,6 +44,22 @@ function clearClientSession() {
   }
 }
 
+function storeUser(user: AuthenticatedUserDTO) {
+  if (typeof window !== "undefined") {
+    window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
+  }
+}
+
+function loadStoredUser(): AuthenticatedUserDTO | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem(USER_STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as AuthenticatedUserDTO) : null;
+  } catch {
+    return null;
+  }
+}
+
 function decodeUserFromToken(token: string): AuthenticatedUserDTO | null {
   try {
     const payload = jose.decodeJwt(token);
@@ -52,6 +70,7 @@ function decodeUserFromToken(token: string): AuthenticatedUserDTO | null {
       name: (payload.name as string) || "",
       email: (payload.email as string) || "",
       roles: (payload.roles as string[]) || [],
+      leaderMinistryIds: (payload.leaderMinistryIds as string[]) || [],
     };
   } catch {
     return null;
@@ -88,9 +107,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const { accessToken } = loadTokens();
     if (accessToken) {
+      const stored = loadStoredUser();
       const decoded = decodeUserFromToken(accessToken);
-      if (decoded) {
-        setUser(decoded);
+      const resolved = stored && stored.id === decoded?.id ? stored : decoded;
+      if (resolved) {
+        setUser(resolved);
       }
     }
     setIsLoading(false);
@@ -106,6 +127,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const decoded = decodeUserFromToken(result.accessToken);
         if (decoded) userData = decoded;
       }
+      storeUser(userData);
       setUser(userData);
     },
     [],

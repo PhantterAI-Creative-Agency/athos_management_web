@@ -16,6 +16,7 @@ export interface AuthenticatedUserDTO {
   name: string;
   email: string;
   roles: string[];
+  leaderMinistryIds: string[];
 }
 
 export interface LoginResultDTO extends AuthTokensDTO {

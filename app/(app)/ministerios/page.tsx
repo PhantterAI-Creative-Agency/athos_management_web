@@ -7,6 +7,7 @@ import { Tag } from "@/components/ui/Tag";
 import { AuthGuard } from "@/components/AuthGuard";
 import { useAuth } from "@/hooks/useAuth";
 import { listMinistries } from "@/api-client/ministries";
+import { canViewMinistryVolunteerCount } from "@/lib/rbac";
 
 function MinisteriosContent() {
   const { user } = useAuth();
@@ -61,9 +62,11 @@ function MinisteriosContent() {
             />
             <div className="p-4">
               <p className="mb-1.5 font-semibold leading-tight">{ministry.name}</p>
-              <div className="flex flex-wrap gap-1.5">
-                <Tag>{ministry.participantsCount} voluntários</Tag>
-              </div>
+              {canViewMinistryVolunteerCount(user, ministry.id) && (
+                <div className="flex flex-wrap gap-1.5">
+                  <Tag>{ministry.participantsCount} voluntários</Tag>
+                </div>
+              )}
             </div>
           </div>
         ))}

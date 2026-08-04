@@ -8,6 +8,8 @@ export interface MinistryDTO {
   contractRequired: boolean;
   participantsCount: number;
   isVolunteer: boolean;
+  leaderId?: string;
+  leaderName?: string;
   createdAt: string;
 }
 
@@ -39,6 +41,7 @@ export interface MinistryInputDTO {
   name: string;
   iconUrl?: string;
   contractRequired?: boolean;
+  leaderId?: string | null;
 }
 
 export function createMinistry(data: MinistryInputDTO): Promise<MinistryDTO> {

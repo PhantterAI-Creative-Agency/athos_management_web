@@ -4,10 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
 import { CoverImage } from "@/components/ui/CoverImage";
 import { AuthGuard } from "@/components/AuthGuard";
+import { useAuth } from "@/hooks/useAuth";
 import { listPlans } from "@/api-client/plans";
 import { listMinistries } from "@/api-client/ministries";
+import { canViewMinistryVolunteerCount } from "@/lib/rbac";
 
 function DescubraContent() {
+  const { user } = useAuth();
+
   const { data: plans } = useQuery({
     queryKey: ["plans", "discover"],
     queryFn: () => listPlans("find"),
@@ -62,7 +66,9 @@ function DescubraContent() {
                   className="mb-2 h-[100px]"
                 />
                 <p className="text-sm font-semibold leading-tight">{ministry.name}</p>
-                <p className="text-[10px] text-text-muted">{ministry.participantsCount} voluntários</p>
+                {canViewMinistryVolunteerCount(user, ministry.id) && (
+                  <p className="text-[10px] text-text-muted">{ministry.participantsCount} voluntários</p>
+                )}
               </div>
             ))}
           </div>
