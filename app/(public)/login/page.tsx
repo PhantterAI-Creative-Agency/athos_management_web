@@ -2,8 +2,8 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/Button";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -31,34 +31,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-6">
       <div className="w-full max-w-sm">
-        <div className="mb-8 flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => router.back()}
-            className="flex items-center gap-1.5 rounded-xl border border-divider px-3 py-2 text-sm font-medium text-text-muted transition-colors hover:text-foreground"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.7}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-4 w-4"
-            >
-              <path d="M15 19l-7-7 7-7" />
-            </svg>
-            Voltar
-          </button>
-
-          <Link
-            href="/"
-            className="rounded-xl border border-divider px-3 py-2 text-sm font-semibold transition-colors hover:text-accent"
-          >
-            Athos Management
-          </Link>
-        </div>
-
+        <h1 className="mb-2 text-center text-2xl font-semibold">Athos Management</h1>
         <p className="mb-8 text-center text-sm text-text-muted">
           Faça login para continuar
         </p>
@@ -108,6 +81,20 @@ export default function LoginPage() {
             {loading ? "Entrando..." : "Entrar"}
           </button>
         </form>
+
+        <div className="mt-4 flex gap-3">
+          <Button
+            type="button"
+            onClick={() => router.back()}
+            tone="neutral"
+            className="flex flex-1 items-center justify-center"
+          >
+            Voltar
+          </Button>
+          <Button href="/" tone="neutral" className="flex flex-1 items-center justify-center">
+            Home
+          </Button>
+        </div>
       </div>
     </div>
   );
