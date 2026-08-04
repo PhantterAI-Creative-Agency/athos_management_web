@@ -1,43 +1,75 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ============================================
+# Athos Management — .gitignore (raiz do monorepo)
+# ============================================
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
+# === Package Lock ===
+**/package-lock.json
+**/yarn.lock
+
+# === Dependências ===
+node_modules/
+
+# === Build / Output ===
+dist/
+build/
+.next/
+out/
+web-build/
+.expo/
+
+# === Cobertura de testes ===
+coverage/
+
+# === Variáveis de ambiente ===
+.env
+.env.*
+!.env.example
+
+# === Logs ===
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+.pnpm-debug.log*
+
+# === SO ===
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# === IDE ===
+.vscode/
+.idea/
+
+# === TypeScript ===
+*.tsbuildinfo
+next-env.d.ts
+expo-env.d.ts
+
+# === Expo / React Native ===
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+.metro-health-check*
+
+# === Vercel ===
+.vercel
+
+# === Yarn ===
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
+# === API ===
+scripts/
 
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-.vercel
+# === Claude Code / Agents ===
+# .claude/
+# CLAUDE.md
+# .playwright-mcp/

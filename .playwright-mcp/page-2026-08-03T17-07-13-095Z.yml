@@ -1,0 +1,154 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic:
+      - link "Princípios de Vida":
+        - /url: /home
+        - img "Princípios de Vida"
+      - navigation:
+        - link "Início":
+          - /url: /home
+        - link "Eventos":
+          - /url: /eventos
+        - link "Mural":
+          - /url: /mural
+        - link "Ministérios":
+          - /url: /ministerios
+        - link "Bíblia":
+          - /url: /biblia
+      - generic:
+        - link "Entrar":
+          - /url: /login
+    - banner [ref=e3]:
+      - img "Princípios de Vida" [ref=e8]
+      - button "Rolar para seção Sobre" [ref=e9]
+    - main [ref=e12]:
+      - heading "Princípios de Vida é uma igreja que acredita em Jesus, uma igreja que ama a Deus e as pessoas." [level=2] [ref=e15]
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - paragraph [ref=e20]: Missão
+          - paragraph [ref=e21]: Alcançar pessoas com o evangelho de Cristo e discipulá-las para uma vida transformada.
+        - generic [ref=e22]:
+          - paragraph [ref=e23]: Visão
+          - paragraph [ref=e24]: Ser uma igreja em constante crescimento, formando líderes e multiplicando comunidades de fé.
+        - generic [ref=e25]:
+          - paragraph [ref=e26]: Valores
+          - paragraph [ref=e27]: Fé, comunidade, serviço e integridade como base de tudo o que fazemos juntos.
+      - generic [ref=e29]:
+        - paragraph [ref=e31]: Bom dia, Querido(a)
+        - paragraph [ref=e32]: Segunda-feira, 3 de Agosto
+      - generic [ref=e35]:
+        - heading "Fale Conosco" [level=3] [ref=e36]
+        - generic [ref=e37]:
+          - generic [ref=e38]:
+            - textbox "Nome" [ref=e39]
+            - generic [ref=e40]:
+              - textbox "Email" [ref=e41]
+              - textbox "Telefone/Whatsapp" [ref=e42]
+            - textbox "Mensagem" [ref=e43]
+            - button "Enviar" [ref=e44]
+          - generic [ref=e46]:
+            - generic [ref=e51]:
+              - paragraph [ref=e52]: E-mail
+              - paragraph [ref=e53]: contato@principiosdevida.org.br
+            - generic [ref=e58]:
+              - paragraph [ref=e59]: WhatsApp
+              - paragraph [ref=e60]: 11 99999-0000
+            - generic [ref=e65]:
+              - paragraph [ref=e66]: Visite-nos
+              - paragraph [ref=e67]: Av. Principal, 1000 - Santo André/SP
+      - generic [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - paragraph [ref=e72]: Sobre
+            - paragraph [ref=e73]: A missão de Princípios de Vida é o reavivamento — a expansão pessoal, regional e global do reino de Deus por meio de Sua presença manifesta.
+          - generic [ref=e74]:
+            - paragraph [ref=e75]: Conectar
+            - list [ref=e76]:
+              - listitem [ref=e77]:
+                - link "Fins de Semana" [ref=e78] [cursor=pointer]:
+                  - /url: /eventos
+              - listitem [ref=e79]:
+                - link "Envolva-se" [ref=e80] [cursor=pointer]:
+                  - /url: /ministerios
+              - listitem [ref=e81]:
+                - link "Calendário" [ref=e82] [cursor=pointer]:
+                  - /url: /eventos
+              - listitem [ref=e83]:
+                - link "Eventos em destaque" [ref=e84] [cursor=pointer]:
+                  - /url: /eventos
+              - listitem [ref=e85]:
+                - link "Escolas" [ref=e86] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e87]:
+                - link "Contate-nos" [ref=e88] [cursor=pointer]:
+                  - /url: /home#contato
+          - generic [ref=e89]:
+            - paragraph [ref=e90]: Recursos
+            - list [ref=e91]:
+              - listitem [ref=e92]:
+                - link "Athos Online" [ref=e93] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e94]:
+                - link "Música" [ref=e95] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e96]:
+                - link "Aconselhamento" [ref=e97] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e98]:
+                - link "Rede de Líderes" [ref=e99] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e100]:
+                - link "Podcasts" [ref=e101] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e102]:
+                - link "Loja" [ref=e103] [cursor=pointer]:
+                  - /url: "#"
+          - generic [ref=e104]:
+            - paragraph [ref=e105]: Mais
+            - list [ref=e106]:
+              - listitem [ref=e107]:
+                - link "Dar" [ref=e108] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e109]:
+                - link "Carreiras" [ref=e110] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e111]:
+                - link "Notícias" [ref=e112] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e113]:
+                - link "Privacidade" [ref=e114] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e115]:
+                - link "Termos" [ref=e116] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e117]:
+                - link "Investindo" [ref=e118] [cursor=pointer]:
+                  - /url: "#"
+          - generic [ref=e119]:
+            - paragraph [ref=e120]: Social
+            - list [ref=e121]:
+              - listitem [ref=e122]:
+                - link "Facebook" [ref=e123] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e126]:
+                - link "Instagram" [ref=e127] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e132]:
+                - link "Twitter" [ref=e133] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e136]:
+                - link "LinkedIn" [ref=e137] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e140]:
+                - link "YouTube" [ref=e141] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e144]:
+                - link "Apple Music" [ref=e145] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e148]:
+                - link "Spotify" [ref=e149] [cursor=pointer]:
+                  - /url: "#"
+        - paragraph [ref=e154]: © 2022 - 2026 Princípios de Vida. Todos os direitos reservados.
+  - alert [ref=e155]
+  - button "Abrir assistente" [ref=e157]
+  - button "Ativar tema escuro" [ref=e160]

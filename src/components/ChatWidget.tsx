@@ -63,9 +63,9 @@ export function ChatWidget({ mode, churchSlug }: ChatWidgetProps) {
   }
 
   return (
-    <div className="fixed bottom-5 right-5 z-50">
+    <div className="fixed bottom-20 right-4 z-50 md:bottom-5 md:right-5">
       {open && (
-        <div className="mb-3 flex h-[28rem] w-80 flex-col overflow-hidden rounded-2xl bg-surface shadow-xl">
+        <div className="absolute bottom-full right-0 mb-3 flex h-[28rem] w-[calc(100vw-2rem)] max-w-80 flex-col overflow-hidden rounded-2xl bg-surface shadow-xl">
           <div className="flex items-center justify-between border-b border-divider px-4 py-3">
             <p className="text-sm font-semibold">Assistente Athos</p>
             <button

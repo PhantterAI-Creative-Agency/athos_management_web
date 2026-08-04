@@ -272,7 +272,7 @@ function HomeContent() {
       </Reveal>
 
       {events && events.length > 0 && (
-        <Reveal as="section" className="bg-surface">
+        <Reveal as="section" className="bg-surface" id="eventos">
           <div className="mx-auto max-w-3xl px-5 py-7 md:max-w-5xl md:px-12">
             <div className="mb-2 flex items-baseline justify-between">
               <SectionTitle>Próximos Eventos</SectionTitle>
@@ -295,7 +295,7 @@ function HomeContent() {
       )}
 
       {latestMedia && latestMedia.length > 0 && (
-        <Reveal as="section" className="bg-background">
+        <Reveal as="section" className="bg-background" id="midias">
           <div className="mx-auto max-w-3xl px-5 py-7 md:max-w-5xl md:px-12">
             <div className="mb-2 flex items-baseline justify-between">
               <SectionTitle>Mídias</SectionTitle>
@@ -331,7 +331,7 @@ function HomeContent() {
       )}
 
       {latestDevotionals && latestDevotionals.length > 0 && (
-        <Reveal as="section" className="bg-background">
+        <Reveal as="section" className="bg-background" id="devocionais">
           <div className="mx-auto max-w-3xl px-5 py-7 pb-10 md:max-w-5xl md:px-12 md:pb-10">
             <div className="mb-5 flex items-baseline justify-between">
               <SectionTitle>Devocionais</SectionTitle>
