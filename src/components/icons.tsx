@@ -18,6 +18,17 @@ function base(props: IconProps, children: React.ReactNode, viewBox = "0 0 24 24"
   );
 }
 
+export function HomeIcon(props: IconProps) {
+  return base(
+    props,
+    <>
+      <path d="M4 11l8-7 8 7" />
+      <path d="M6 9.5V20a1 1 0 001 1h10a1 1 0 001-1V9.5" />
+      <path d="M9.5 21v-6h5v6" />
+    </>
+  );
+}
+
 export function CalendarIcon(props: IconProps) {
   return base(
     props,

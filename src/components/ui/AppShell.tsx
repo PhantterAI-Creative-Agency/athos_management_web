@@ -9,11 +9,13 @@ import { HeroReveal } from "@/components/ui/HeroReveal";
 import { useAuth } from "@/hooks/useAuth";
 import { getUser } from "@/api-client/users";
 import {
-  BookIcon,
   CalendarIcon,
+  CameraIcon,
   CoinIcon,
+  HomeIcon,
   IdCardIcon,
   HeartIcon,
+  MailIcon,
   SettingsIcon,
   UsersIcon,
   MenuIcon,
@@ -65,11 +67,14 @@ function waitForElementAndScroll(id: string, attempts = 20) {
 }
 
 const tabBarLinks = [
-  { label: "Início", href: "/home", icon: CalendarIcon },
-  { label: "Mural", href: "/mural", icon: HeartIcon },
-  { label: "Descubra", href: "/descubra", icon: BookIcon },
-  { label: "Comunidade", href: "/comunidade", icon: UsersIcon },
-  { label: "Perfil", href: "/perfil", icon: IdCardIcon },
+  { label: "Início", href: "/home", icon: HomeIcon, authOnly: false },
+  { label: "Eventos", href: "/eventos", icon: CalendarIcon, authOnly: false },
+  { label: "Mídias", href: "/midias", icon: CameraIcon, authOnly: false },
+  { label: "Mural", href: "/mural", icon: HeartIcon, authOnly: true },
+  { label: "Comunidade", href: "/comunidade", icon: UsersIcon, authOnly: true },
+  { label: "Planos", href: "/planos", icon: CoinIcon, authOnly: true },
+  { label: "Contato", href: "/contato", icon: MailIcon, authOnly: false },
+  { label: "Perfil", href: "/perfil", icon: IdCardIcon, authOnly: true },
 ];
 
 export function AppShell({
@@ -253,7 +258,7 @@ export function AppShell({
 
       <nav className="sticky bottom-0 flex justify-around border-t border-divider bg-background px-0 py-3 md:hidden">
         {tabBarLinks
-          .filter((link) => link.href !== "/perfil" || user)
+          .filter((link) => !link.authOnly || user)
           .map((link) => {
           const Icon = link.icon;
           const isActive = link.href === active;
