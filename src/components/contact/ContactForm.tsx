@@ -8,6 +8,7 @@ export function ContactForm({ className = "" }: { className?: string }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -17,11 +18,12 @@ export function ContactForm({ className = "" }: { className?: string }) {
     setStatus("loading");
     setErrorMessage("");
     try {
-      await sendContactMessage({ name, email, phone, message });
+      await sendContactMessage({ name, email, phone, subject, message });
       setStatus("success");
       setName("");
       setEmail("");
       setPhone("");
+      setSubject("");
       setMessage("");
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Erro ao enviar mensagem";
@@ -68,6 +70,15 @@ export function ContactForm({ className = "" }: { className?: string }) {
           className="rounded-lg border border-divider bg-background px-4 py-3 text-sm text-foreground placeholder:text-text-muted focus:border-accent focus:outline-none"
         />
       </div>
+      <input
+        type="text"
+        name="subject"
+        placeholder="Assunto"
+        required
+        value={subject}
+        onChange={(e) => setSubject(e.target.value)}
+        className="rounded-lg border border-divider bg-background px-4 py-3 text-sm text-foreground placeholder:text-text-muted focus:border-accent focus:outline-none"
+      />
       <textarea
         name="message"
         placeholder="Mensagem"
