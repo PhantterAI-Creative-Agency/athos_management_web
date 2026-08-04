@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
 import { CoverImage } from "@/components/ui/CoverImage";
 import { Tag } from "@/components/ui/Tag";
-import { AuthGuard } from "@/components/AuthGuard";
 import { useAuth } from "@/hooks/useAuth";
 import { listMinistries } from "@/api-client/ministries";
 import { canViewMinistryVolunteerCount } from "@/lib/rbac";
@@ -82,10 +81,8 @@ function MinisteriosContent() {
 
 export default function MinisteriosPage() {
   return (
-    <AuthGuard>
-      <AppShell active="/ministerios">
-        <MinisteriosContent />
-      </AppShell>
-    </AuthGuard>
+    <AppShell active="/ministerios">
+      <MinisteriosContent />
+    </AppShell>
   );
 }

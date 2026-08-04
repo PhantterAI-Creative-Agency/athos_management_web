@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
-import { AuthGuard } from "@/components/AuthGuard";
 import { getChapter } from "@/api-client/bible";
 
 const BOOKS = [
@@ -126,10 +125,8 @@ function BibliaContent() {
 
 export default function BibliaPage() {
   return (
-    <AuthGuard>
-      <AppShell active="/biblia">
-        <BibliaContent />
-      </AppShell>
-    </AuthGuard>
+    <AppShell active="/biblia">
+      <BibliaContent />
+    </AppShell>
   );
 }

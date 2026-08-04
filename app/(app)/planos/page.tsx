@@ -5,7 +5,6 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { CoverImage } from "@/components/ui/CoverImage";
-import { AuthGuard } from "@/components/AuthGuard";
 import { listPlans, upsertPlanProgress } from "@/api-client/plans";
 
 const TABS = ["Descobrir", "Meus", "Salvos", "Concluídos"];
@@ -118,10 +117,8 @@ function PlanosContent() {
 
 export default function PlanosPage() {
   return (
-    <AuthGuard>
-      <AppShell active="/planos">
-        <PlanosContent />
-      </AppShell>
-    </AuthGuard>
+    <AppShell active="/planos">
+      <PlanosContent />
+    </AppShell>
   );
 }

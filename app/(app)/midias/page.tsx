@@ -5,7 +5,6 @@ import { AppShell } from "@/components/ui/AppShell";
 import { CoverImage } from "@/components/ui/CoverImage";
 import { YouTubeEmbed } from "@/components/ui/YouTubeEmbed";
 import { Tag } from "@/components/ui/Tag";
-import { AuthGuard } from "@/components/AuthGuard";
 import { listMedia } from "@/api-client/media";
 
 function MidiasContent() {
@@ -53,10 +52,8 @@ function MidiasContent() {
 
 export default function MidiasPage() {
   return (
-    <AuthGuard>
-      <AppShell active="/midias">
-        <MidiasContent />
-      </AppShell>
-    </AuthGuard>
+    <AppShell active="/midias">
+      <MidiasContent />
+    </AppShell>
   );
 }
