@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { sendContactMessage } from "@/api-client/contact";
 
@@ -38,6 +38,12 @@ export function ContactForm({ className = "" }: { className?: string }) {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (status !== "success" && status !== "error") return;
+    const timer = setTimeout(() => setStatus("idle"), 15000);
+    return () => clearTimeout(timer);
+  }, [status]);
 
   function validate(): FieldErrors {
     const nextErrors: FieldErrors = {};
