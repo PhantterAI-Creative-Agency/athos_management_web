@@ -2,6 +2,8 @@
 
 import { useState, type FormEvent } from "react";
 import { useMutation } from "@tanstack/react-query";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { sendChatMessage, sendGuestChatMessage, type ChatMessageCategory } from "@/api-client/aiChat";
 import { ChatIcon } from "@/components/icons";
 
@@ -120,7 +122,13 @@ export function ChatWidget({ mode, churchSlug }: ChatWidgetProps) {
                         : "bg-background text-foreground"
                     }`}
                   >
-                    {entry.content}
+                    {entry.role === "assistant" ? (
+                      <div className="space-y-2 [&_a]:underline [&_a]:text-accent [&_code]:rounded [&_code]:bg-divider/50 [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-xs [&_ol]:list-decimal [&_ol]:pl-4 [&_p]:leading-relaxed [&_strong]:font-semibold [&_ul]:list-disc [&_ul]:pl-4">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{entry.content}</ReactMarkdown>
+                      </div>
+                    ) : (
+                      entry.content
+                    )}
                   </div>
                 ))}
                 {mutation.isPending && <p className="text-xs text-text-muted">Digitando...</p>}
