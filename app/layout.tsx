@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Athos Management",
-  description: "Gestão eclesiástica e devocional — Athos Management",
+  title: "Princípios de Vida",
+  description: "Gestão eclesiástica e devocional — Princípios de Vida",
 };
 
 export default function RootLayout({
