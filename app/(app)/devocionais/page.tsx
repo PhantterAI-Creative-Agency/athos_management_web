@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
 import { CoverImage } from "@/components/ui/CoverImage";
-import { AuthGuard } from "@/components/AuthGuard";
 import { listDevotionals } from "@/api-client/devotionals";
 
 function DevocionaisContent() {
@@ -70,10 +69,8 @@ function DevocionaisContent() {
 
 export default function DevocionaisPage() {
   return (
-    <AuthGuard>
-      <AppShell active="/devocionais">
-        <DevocionaisContent />
-      </AppShell>
-    </AuthGuard>
+    <AppShell active="/devocionais">
+      <DevocionaisContent />
+    </AppShell>
   );
 }

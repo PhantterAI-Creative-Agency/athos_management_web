@@ -5,13 +5,16 @@ import { AppShell } from "@/components/ui/AppShell";
 import { CoverImage } from "@/components/ui/CoverImage";
 import { YouTubeEmbed } from "@/components/ui/YouTubeEmbed";
 import { Tag } from "@/components/ui/Tag";
-import { AuthGuard } from "@/components/AuthGuard";
-import { listMedia } from "@/api-client/media";
+import { useAuth } from "@/hooks/useAuth";
+import { listMedia, getPublicMedia } from "@/api-client/media";
+
+const CHURCH_SLUG = process.env.NEXT_PUBLIC_CHURCH_SLUG ?? "principios-de-vida";
 
 function MidiasContent() {
+  const { user } = useAuth();
   const { data: mediaList } = useQuery({
-    queryKey: ["media"],
-    queryFn: () => listMedia(),
+    queryKey: ["media", user?.id],
+    queryFn: () => (user ? listMedia() : getPublicMedia(CHURCH_SLUG)),
   });
 
   return (
@@ -53,10 +56,8 @@ function MidiasContent() {
 
 export default function MidiasPage() {
   return (
-    <AuthGuard>
-      <AppShell active="/midias">
-        <MidiasContent />
-      </AppShell>
-    </AuthGuard>
+    <AppShell active="/midias">
+      <MidiasContent />
+    </AppShell>
   );
 }

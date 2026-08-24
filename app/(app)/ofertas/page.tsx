@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
-import { AuthGuard } from "@/components/AuthGuard";
 import { useAuth } from "@/hooks/useAuth";
 import { listOfferings, createOffering } from "@/api-client/offerings";
 import { Tag } from "@/components/ui/Tag";
@@ -136,10 +135,8 @@ function OfertasContent() {
 
 export default function OfertasPage() {
   return (
-    <AuthGuard>
-      <AppShell active="/ofertas">
-        <OfertasContent />
-      </AppShell>
-    </AuthGuard>
+    <AppShell active="/ofertas">
+      <OfertasContent />
+    </AppShell>
   );
 }
