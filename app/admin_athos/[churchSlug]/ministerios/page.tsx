@@ -52,6 +52,12 @@ export default function AdminMinistriesPage({
             </div>
             <div className="flex items-center gap-4">
               <Link
+                href={`/admin_athos/${churchSlug}/ministerios/${ministry.id}/escalas`}
+                className="text-sm font-medium text-accent"
+              >
+                Escalas
+              </Link>
+              <Link
                 href={`/admin_athos/${churchSlug}/ministerios/${ministry.id}`}
                 className="text-sm font-medium text-accent"
               >

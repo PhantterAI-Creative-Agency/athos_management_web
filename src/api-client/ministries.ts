@@ -62,3 +62,24 @@ export function addVolunteer(
 ): Promise<MinistryVolunteerDTO> {
   return api.post<MinistryVolunteerDTO>(`/ministries/${ministryId}/volunteers`, data);
 }
+
+export function listMinistryVolunteers(ministryId: string): Promise<MinistryVolunteerDTO[]> {
+  return api.get<MinistryVolunteerDTO[]>(`/ministries/${ministryId}/volunteers`);
+}
+
+export interface ServiceFunctionDTO {
+  id: string;
+  name: string;
+  order: number;
+}
+
+export function getServiceFunctions(ministryId: string): Promise<ServiceFunctionDTO[]> {
+  return api.get<ServiceFunctionDTO[]>(`/ministries/${ministryId}/service-functions`);
+}
+
+export function replaceServiceFunctions(
+  ministryId: string,
+  functions: { id?: string; name: string }[],
+): Promise<ServiceFunctionDTO[]> {
+  return api.put<ServiceFunctionDTO[]>(`/ministries/${ministryId}/service-functions`, { functions });
+}

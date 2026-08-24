@@ -1,12 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
 import { CoverImage } from "@/components/ui/CoverImage";
 import { Tag } from "@/components/ui/Tag";
 import { useAuth } from "@/hooks/useAuth";
 import { listMinistries } from "@/api-client/ministries";
-import { canViewMinistryVolunteerCount } from "@/lib/rbac";
+import { getMyChurch } from "@/api-client/churches";
+import { canManageMinistrySchedule, canViewMinistryVolunteerCount } from "@/lib/rbac";
 
 function MinisteriosContent() {
   const { user } = useAuth();
@@ -15,6 +17,12 @@ function MinisteriosContent() {
     queryKey: ["ministries", user?.id],
     queryFn: () => listMinistries(user?.id),
     enabled: !!user?.id,
+  });
+
+  const { data: church } = useQuery({
+    queryKey: ["churches", "me"],
+    queryFn: getMyChurch,
+    enabled: !!user,
   });
 
   const volunteerMinistries = ministries?.filter((m) => m.isVolunteer);
@@ -41,6 +49,14 @@ function MinisteriosContent() {
                 <div className="p-4">
                   <p className="mb-1.5 font-semibold leading-tight">{ministry.name}</p>
                   <Tag>Voluntário</Tag>
+                  {church && canManageMinistrySchedule(user, ministry.id) && (
+                    <Link
+                      href={`/admin_athos/${church.slug}/ministerios/${ministry.id}/escalas`}
+                      className="mt-2 block text-sm font-medium text-accent"
+                    >
+                      Gerenciar escalas
+                    </Link>
+                  )}
                 </div>
               </div>
             ))}
@@ -65,6 +81,14 @@ function MinisteriosContent() {
                 <div className="flex flex-wrap gap-1.5">
                   <Tag>{ministry.participantsCount} voluntários</Tag>
                 </div>
+              )}
+              {church && canManageMinistrySchedule(user, ministry.id) && (
+                <Link
+                  href={`/admin_athos/${church.slug}/ministerios/${ministry.id}/escalas`}
+                  className="mt-2 block text-sm font-medium text-accent"
+                >
+                  Gerenciar escalas
+                </Link>
               )}
             </div>
           </div>

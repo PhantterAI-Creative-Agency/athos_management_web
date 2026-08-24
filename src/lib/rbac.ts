@@ -43,3 +43,8 @@ export function canViewMinistryVolunteerCount(
   if (hasAnyRole(user, MINISTRY_VOLUNTEER_COUNT_ROLES)) return true;
   return !!user?.leaderMinistryIds.includes(ministryId);
 }
+
+export function canManageMinistrySchedule(user: AuthenticatedUserDTO | null, ministryId: string): boolean {
+  if (isAdmin(user)) return true;
+  return !!user?.leaderMinistryIds.includes(ministryId);
+}

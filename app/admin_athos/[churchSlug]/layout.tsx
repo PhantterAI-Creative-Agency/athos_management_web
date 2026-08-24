@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AdminGuard } from "@/components/AdminGuard";
 import { useAuth } from "@/hooks/useAuth";
+import { isAdmin } from "@/lib/rbac";
 
 export default function AdminLayout({
   children,
@@ -45,19 +46,21 @@ export default function AdminLayout({
             </button>
           </div>
         </header>
-        <nav className="scrollbar-hide flex gap-5 overflow-x-auto whitespace-nowrap border-b border-divider px-5 py-3 md:px-12">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`label-caps flex-none ${
-                pathname === link.href ? "text-foreground" : "text-text-muted"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        {isAdmin(user) && (
+          <nav className="scrollbar-hide flex gap-5 overflow-x-auto whitespace-nowrap border-b border-divider px-5 py-3 md:px-12">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`label-caps flex-none ${
+                  pathname === link.href ? "text-foreground" : "text-text-muted"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        )}
         <main className="flex-1 px-5 py-6 md:px-12 md:py-10">{children}</main>
       </div>
     </AdminGuard>
