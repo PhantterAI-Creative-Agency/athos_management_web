@@ -12,10 +12,8 @@ export function MediaForm({
   onSubmit: (data: MediaInputDTO) => void;
   isSubmitting: boolean;
 }) {
-  const [type, setType] = useState<"video" | "photo">(initialMedia?.type ?? "photo");
   const [category, setCategory] = useState(initialMedia?.category ?? "");
   const [title, setTitle] = useState(initialMedia?.title ?? "");
-  const [youtubeId, setYoutubeId] = useState(initialMedia?.youtubeId ?? "");
   const [url, setUrl] = useState(initialMedia?.url ?? "");
 
   return (
@@ -23,26 +21,12 @@ export function MediaForm({
       className="flex flex-col gap-4 rounded-2xl bg-surface p-4"
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmit({
-          type,
-          category,
-          title,
-          youtubeId: type === "video" ? youtubeId || undefined : undefined,
-          url: type === "photo" ? url || undefined : undefined,
-        });
+        onSubmit({ type: "photo", category, title, url: url || undefined });
       }}
     >
-      <label className="block">
-        <span className="mb-1 block text-sm font-medium">Tipo</span>
-        <select
-          value={type}
-          onChange={(e) => setType(e.target.value as "video" | "photo")}
-          className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
-        >
-          <option value="photo">Foto</option>
-          <option value="video">Vídeo (YouTube)</option>
-        </select>
-      </label>
+      <p className="text-sm text-foreground/70">
+        Vídeos são sincronizados automaticamente do canal do YouTube da igreja. Este formulário cadastra apenas fotos.
+      </p>
 
       <label className="block">
         <span className="mb-1 block text-sm font-medium">Categoria</span>
@@ -66,29 +50,16 @@ export function MediaForm({
         />
       </label>
 
-      {type === "video" ? (
-        <label className="block">
-          <span className="mb-1 block text-sm font-medium">ID do vídeo no YouTube</span>
-          <input
-            type="text"
-            required
-            value={youtubeId}
-            onChange={(e) => setYoutubeId(e.target.value)}
-            className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
-          />
-        </label>
-      ) : (
-        <label className="block">
-          <span className="mb-1 block text-sm font-medium">URL da imagem</span>
-          <input
-            type="text"
-            required
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
-          />
-        </label>
-      )}
+      <label className="block">
+        <span className="mb-1 block text-sm font-medium">URL da imagem</span>
+        <input
+          type="text"
+          required
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
+        />
+      </label>
 
       <button
         type="submit"

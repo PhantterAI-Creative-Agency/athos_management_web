@@ -8,6 +8,7 @@ export interface MediaDTO {
   title: string;
   youtubeId?: string;
   url?: string;
+  source: "manual" | "youtube_sync";
   createdAt: string;
 }
 
@@ -24,10 +25,9 @@ export function getMedia(id: string): Promise<MediaDTO> {
 }
 
 export interface MediaInputDTO {
-  type: "video" | "photo";
+  type: "photo";
   category: string;
   title: string;
-  youtubeId?: string;
   url?: string;
 }
 
@@ -35,10 +35,14 @@ export function createMedia(data: MediaInputDTO): Promise<MediaDTO> {
   return api.post<MediaDTO>("/media", data);
 }
 
-export function updateMedia(id: string, data: Partial<MediaInputDTO>): Promise<MediaDTO> {
+export function updateMedia(id: string, data: Partial<Pick<MediaInputDTO, "category" | "title" | "url">>): Promise<MediaDTO> {
   return api.patch<MediaDTO>(`/media/${id}`, data);
 }
 
 export function deleteMedia(id: string): Promise<void> {
   return api.delete<void>(`/media/${id}`);
+}
+
+export function syncYoutubeMedia(): Promise<MediaDTO[]> {
+  return api.post<MediaDTO[]>("/media/sync-youtube", {});
 }
