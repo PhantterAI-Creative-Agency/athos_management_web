@@ -4,6 +4,10 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { listUsers } from "@/api-client/users";
 import type { MinistryDTO, MinistryInputDTO } from "@/api-client/ministries";
+import { BannerUpload } from "@/components/ui/BannerUpload";
+
+const BANNER_WIDTH = 800;
+const BANNER_HEIGHT = 800;
 
 export function MinistryForm({
   initialMinistry,
@@ -47,15 +51,13 @@ export function MinistryForm({
         />
       </label>
 
-      <label className="block">
-        <span className="mb-1 block text-sm font-medium">URL do ícone (opcional)</span>
-        <input
-          type="text"
-          value={iconUrl}
-          onChange={(e) => setIconUrl(e.target.value)}
-          className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
-        />
-      </label>
+      <BannerUpload
+        label="Foto do ministério (opcional)"
+        imageUrl={iconUrl}
+        targetWidth={BANNER_WIDTH}
+        targetHeight={BANNER_HEIGHT}
+        onUpload={setIconUrl}
+      />
 
       <label className="block">
         <span className="mb-1 block text-sm font-medium">Líder (opcional)</span>

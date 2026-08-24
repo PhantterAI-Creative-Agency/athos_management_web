@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import type { DevotionalDTO, DevotionalInputDTO } from "@/api-client/devotionals";
+import { BannerUpload } from "@/components/ui/BannerUpload";
+
+const BANNER_WIDTH = 800;
+const BANNER_HEIGHT = 800;
 
 function toDateInputValue(iso?: string): string {
   if (!iso) return "";
@@ -19,6 +23,7 @@ export function DevotionalForm({
 }) {
   const [title, setTitle] = useState(initialDevotional?.title ?? "");
   const [content, setContent] = useState(initialDevotional?.content ?? "");
+  const [imageUrl, setImageUrl] = useState(initialDevotional?.imageUrl ?? "");
   const [publishedAt, setPublishedAt] = useState(
     toDateInputValue(initialDevotional?.publishedAt) || toDateInputValue(new Date().toISOString()),
   );
@@ -28,7 +33,12 @@ export function DevotionalForm({
       className="flex flex-col gap-4 rounded-2xl bg-surface p-4"
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmit({ title, content, publishedAt: new Date(publishedAt).toISOString() });
+        onSubmit({
+          title,
+          content,
+          publishedAt: new Date(publishedAt).toISOString(),
+          imageUrl: imageUrl || undefined,
+        });
       }}
     >
       <label className="block">
@@ -41,6 +51,14 @@ export function DevotionalForm({
           className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
         />
       </label>
+
+      <BannerUpload
+        label="Foto do devocional"
+        imageUrl={imageUrl}
+        targetWidth={BANNER_WIDTH}
+        targetHeight={BANNER_HEIGHT}
+        onUpload={setImageUrl}
+      />
 
       <label className="block">
         <span className="mb-1 block text-sm font-medium">Data de publicação</span>

@@ -7,6 +7,7 @@ export interface DevotionalDTO {
   content: string;
   publishedAt: string;
   createdAt: string;
+  imageUrl?: string;
 }
 
 export function listDevotionals(): Promise<DevotionalDTO[]> {
@@ -25,6 +26,7 @@ export interface DevotionalInputDTO {
   title: string;
   content: string;
   publishedAt?: string;
+  imageUrl?: string;
 }
 
 export function createDevotional(data: DevotionalInputDTO): Promise<DevotionalDTO> {

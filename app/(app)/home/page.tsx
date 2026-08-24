@@ -98,7 +98,12 @@ function MinistriesSection({ items, user }: { items: MinistryDTO[]; user: Authen
       <RevealStagger className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
         {items.map((ministry) => (
           <RevealItem key={ministry.id}>
-            <CoverImage label={ministry.name} seed={`ministry-${ministry.id}`} className="h-[100px]" />
+            <CoverImage
+              label={ministry.name}
+              seed={`ministry-${ministry.id}`}
+              src={ministry.iconUrl}
+              className="h-[100px]"
+            />
             <p className="mb-1.5 mt-2 font-semibold leading-tight">{ministry.name}</p>
             {canViewMinistryVolunteerCount(user, ministry.id) && (
               <Tag>{ministry.participantsCount} voluntários</Tag>
@@ -284,6 +289,7 @@ function HomeContent() {
               <CoverImage
                 label={bannerEvent.title}
                 seed={`event-${bannerEvent.id}`}
+                src={bannerEvent.featuredImageUrl || bannerEvent.imageUrl}
                 overlay="strong"
                 className="h-[170px] md:h-[300px]"
               >
@@ -313,7 +319,12 @@ function HomeContent() {
             <RevealStagger className="scrollbar-hide flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory">
               {events.map((item) => (
                 <RevealItem key={item.id} className="w-[260px] flex-none snap-start md:w-[300px]">
-                  <CoverImage label={item.title} seed={`event-${item.id}`} className="aspect-video rounded-lg" />
+                  <CoverImage
+                    label={item.title}
+                    seed={`event-${item.id}`}
+                    src={item.imageUrl}
+                    className="aspect-video rounded-lg"
+                  />
                   <p className="mb-0.5 mt-2 text-[10px] uppercase tracking-wide text-accent md:text-xs">
                     {formatEventSchedule(item.date)}
                     {item.location && ` · ${item.location}`}
@@ -350,6 +361,7 @@ function HomeContent() {
                   <CoverImage
                     label={item.title}
                     seed={`event-${item.id}`}
+                    src={item.featuredImageUrl || item.imageUrl}
                     className="aspect-video rounded-lg"
                   />
                   <p className="mt-3 text-sm font-semibold leading-tight text-white md:text-base">
@@ -386,6 +398,7 @@ function HomeContent() {
                     <CoverImage
                       label={item.title}
                       seed={`dev-${item.id}`}
+                      src={item.imageUrl}
                       className="aspect-square rounded-none"
                     />
                     <div className="bg-surface px-3.5 py-3">
