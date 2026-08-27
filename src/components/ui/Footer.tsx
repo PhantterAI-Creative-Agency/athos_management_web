@@ -52,8 +52,8 @@ const footerColumns: FooterColumn[] = [
       { label: "Carreiras", href: "#" },
       { label: "Notícias", href: "#" },
       { label: "Privacidade", href: "#" },
-      { label: "Termos", href: "#" },
-      { label: "Investindo", href: "#" },
+      { label: "Termos de Serviço", href: "/termos-de-servico" },
+      { label: "Exclusão de Dados", href: "/exclusao-de-dados" },
     ],
   },
 ];
