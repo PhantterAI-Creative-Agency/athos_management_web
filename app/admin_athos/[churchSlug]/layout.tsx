@@ -26,6 +26,7 @@ export default function AdminLayout({
     { label: "Reunião nos Lares", href: `/admin_athos/${churchSlug}/reuniao-nos-lares` },
     { label: "Devocionais", href: `/admin_athos/${churchSlug}/devocionais` },
     { label: "Mídias", href: `/admin_athos/${churchSlug}/midias` },
+    { label: "Anúncios", href: `/admin_athos/${churchSlug}/anuncios` },
     { label: "Acompanhamento Pastoral", href: `/admin_athos/${churchSlug}/acompanhamento-pastoral` },
   ];
 

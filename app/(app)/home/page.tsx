@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
+import { AdSlot } from "@/components/ui/AdSlot";
 import { CoverImage } from "@/components/ui/CoverImage";
 import { Tag } from "@/components/ui/Tag";
 import { YouTubeEmbed } from "@/components/ui/YouTubeEmbed";
@@ -306,6 +307,10 @@ function HomeContent() {
               </CoverImage>
             </Link>
           )}
+
+          <div className="mt-4">
+            <AdSlot placement="home_hero" format="slide" />
+          </div>
         </div>
       </Reveal>
 
@@ -348,6 +353,12 @@ function HomeContent() {
           </div>
         </Reveal>
       )}
+
+      <div className="mx-auto max-w-3xl px-5 md:max-w-5xl md:px-12">
+        <div className="mx-auto w-full max-w-[300px]">
+          <AdSlot placement="home_grid" format="card" />
+        </div>
+      </div>
 
       {featuredEvents.length > 0 && (
         <Reveal as="section" className="bg-[#1a1a1a] py-12 md:py-16">
