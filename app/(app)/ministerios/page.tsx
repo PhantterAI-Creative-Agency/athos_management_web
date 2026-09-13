@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
+import { AdSlot } from "@/components/ui/AdSlot";
 import { CoverImage } from "@/components/ui/CoverImage";
 import { Tag } from "@/components/ui/Tag";
 import { useAuth } from "@/hooks/useAuth";
@@ -32,6 +33,10 @@ function MinisteriosContent() {
     <div className="mx-auto max-w-3xl px-5 pb-10 pt-6 md:max-w-5xl md:px-12 md:py-10">
       <h2 className="mb-1 text-2xl font-semibold">Ministérios</h2>
       <p className="mb-5 text-sm text-text-muted">Encontre seu lugar e sirva com alegria</p>
+
+      <div className="mx-auto mb-5 w-full max-w-[300px]">
+        <AdSlot placement="ministerios_grid" format="card" />
+      </div>
 
       {volunteerMinistries && volunteerMinistries.length > 0 && (
         <div className="mb-6">

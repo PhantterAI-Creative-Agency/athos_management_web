@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
+import { AdSlot } from "@/components/ui/AdSlot";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { EventCard } from "@/components/events/EventCard";
 import { useAuth } from "@/hooks/useAuth";
@@ -81,6 +82,10 @@ function EventosContent() {
           options={["Inscrições", "Participando", "Participou"]}
           onChange={setTab}
         />
+      </div>
+
+      <div className="mx-auto mb-5 w-full max-w-[300px]">
+        <AdSlot placement="eventos_grid" format="card" />
       </div>
 
       <div className="flex flex-col gap-4 md:grid md:grid-cols-3">

@@ -8,6 +8,10 @@ import { deleteAd, listAds, updateAd } from "@/api-client/ads";
 const PLACEMENT_LABELS: Record<string, string> = {
   home_hero: "Home — Banner principal",
   home_grid: "Home — Grade",
+  eventos_grid: "Eventos",
+  midias_grid: "Mídias",
+  devocionais_grid: "Devocionais",
+  ministerios_grid: "Ministérios",
 };
 
 export default function AdminAdsPage({
