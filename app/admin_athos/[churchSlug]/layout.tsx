@@ -4,6 +4,7 @@ import { use } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AdminGuard } from "@/components/AdminGuard";
+import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { useAuth } from "@/hooks/useAuth";
 import { isAdmin } from "@/lib/rbac";
 
@@ -17,18 +18,6 @@ export default function AdminLayout({
   const { churchSlug } = use(params);
   const { user, logout } = useAuth();
   const pathname = usePathname();
-
-  const navLinks = [
-    { label: "Geral", href: `/admin_athos/${churchSlug}` },
-    { label: "Conteúdo da Home", href: `/admin_athos/${churchSlug}/home` },
-    { label: "Eventos", href: `/admin_athos/${churchSlug}/eventos` },
-    { label: "Ministérios", href: `/admin_athos/${churchSlug}/ministerios` },
-    { label: "Reunião nos Lares", href: `/admin_athos/${churchSlug}/reuniao-nos-lares` },
-    { label: "Devocionais", href: `/admin_athos/${churchSlug}/devocionais` },
-    { label: "Mídias", href: `/admin_athos/${churchSlug}/midias` },
-    { label: "Anúncios", href: `/admin_athos/${churchSlug}/anuncios` },
-    { label: "Acompanhamento Pastoral", href: `/admin_athos/${churchSlug}/acompanhamento-pastoral` },
-  ];
 
   return (
     <AdminGuard churchSlug={churchSlug}>
@@ -47,22 +36,10 @@ export default function AdminLayout({
             </button>
           </div>
         </header>
-        {isAdmin(user) && (
-          <nav className="scrollbar-hide flex gap-5 overflow-x-auto whitespace-nowrap border-b border-divider px-5 py-3 md:px-12">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`label-caps flex-none ${
-                  pathname === link.href ? "text-foreground" : "text-text-muted"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-        )}
-        <main className="flex-1 px-5 py-6 md:px-12 md:py-10">{children}</main>
+        <div className="flex flex-1 flex-col md:flex-row">
+          {isAdmin(user) && <AdminSidebar churchSlug={churchSlug} pathname={pathname} />}
+          <main className="flex-1 px-5 py-6 md:px-8 md:py-10">{children}</main>
+        </div>
       </div>
     </AdminGuard>
   );

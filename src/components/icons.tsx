@@ -93,6 +93,16 @@ export function ChevronRightIcon(props: IconProps) {
   return base(props, <path d="M9 5l7 7-7 7" />);
 }
 
+export function ChartIcon(props: IconProps) {
+  return base(
+    props,
+    <>
+      <path d="M4 20V10M11 20V4M18 20v-7" />
+      <path d="M4 20h14" />
+    </>
+  );
+}
+
 export function IdCardIcon(props: IconProps) {
   return base(
     props,
@@ -143,6 +153,17 @@ export function CoinIcon(props: IconProps) {
     <>
       <circle cx="12" cy="12" r="9" />
       <path d="M12 7v10M15 9.5c0-1.4-1.3-2.5-3-2.5s-3 1.1-3 2.5 1.3 2 3 2.5c1.7.5 3 1.1 3 2.5s-1.3 2.5-3 2.5-3-1.1-3-2.5" />
+    </>
+  );
+}
+
+export function MegaphoneIcon(props: IconProps) {
+  return base(
+    props,
+    <>
+      <path d="M3 11v2a2 2 0 002 2h1l9 5V4l-9 5H5a2 2 0 00-2 2z" />
+      <path d="M15 9a4 4 0 010 6" />
+      <path d="M8 15v4a1.5 1.5 0 01-3 0v-4" />
     </>
   );
 }
