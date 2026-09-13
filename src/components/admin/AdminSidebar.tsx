@@ -7,6 +7,7 @@ import {
   ChatIcon,
   HeartIcon,
   HomeIcon,
+  MegaphoneIcon,
   SettingsIcon,
   UsersIcon,
 } from "@/components/icons";
@@ -29,6 +30,7 @@ export function AdminSidebar({
     { label: "Reunião nos Lares", href: `${base}/reuniao-nos-lares`, icon: HeartIcon },
     { label: "Devocionais", href: `${base}/devocionais`, icon: BookIcon },
     { label: "Mídias", href: `${base}/midias`, icon: CameraIcon },
+    { label: "Anúncios", href: `${base}/anuncios`, icon: MegaphoneIcon },
     { label: "Acompanhamento Pastoral", href: `${base}/acompanhamento-pastoral`, icon: ChatIcon },
   ];
 

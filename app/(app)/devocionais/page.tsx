@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
+import { AdSlot } from "@/components/ui/AdSlot";
 import { CoverImage } from "@/components/ui/CoverImage";
 import { listDevotionals } from "@/api-client/devotionals";
 
@@ -22,6 +23,10 @@ function DevocionaisContent() {
     <div className="mx-auto max-w-3xl px-5 pb-10 pt-6 md:max-w-5xl md:px-12 md:py-10">
       <h2 className="mb-1 text-2xl font-semibold">Devocionais</h2>
       <p className="mb-5 text-sm text-text-muted">Alimente sua fé diariamente</p>
+
+      <div className="mx-auto mb-5 w-full max-w-[300px]">
+        <AdSlot placement="devocionais_grid" format="card" />
+      </div>
 
       <div className="flex flex-col gap-6 md:flex-row">
         <div className="flex flex-col gap-2 md:w-64 md:flex-none">

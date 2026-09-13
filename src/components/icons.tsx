@@ -157,6 +157,17 @@ export function CoinIcon(props: IconProps) {
   );
 }
 
+export function MegaphoneIcon(props: IconProps) {
+  return base(
+    props,
+    <>
+      <path d="M3 11v2a2 2 0 002 2h1l9 5V4l-9 5H5a2 2 0 00-2 2z" />
+      <path d="M15 9a4 4 0 010 6" />
+      <path d="M8 15v4a1.5 1.5 0 01-3 0v-4" />
+    </>
+  );
+}
+
 export function BellIcon(props: IconProps) {
   return base(
     props,
