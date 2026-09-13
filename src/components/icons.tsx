@@ -93,6 +93,16 @@ export function ChevronRightIcon(props: IconProps) {
   return base(props, <path d="M9 5l7 7-7 7" />);
 }
 
+export function ChartIcon(props: IconProps) {
+  return base(
+    props,
+    <>
+      <path d="M4 20V10M11 20V4M18 20v-7" />
+      <path d="M4 20h14" />
+    </>
+  );
+}
+
 export function IdCardIcon(props: IconProps) {
   return base(
     props,
