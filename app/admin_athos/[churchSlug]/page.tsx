@@ -18,6 +18,13 @@ export default function AdminDashboardPage() {
   }
 
   const { counts, accessesByDay, accessesByMinistry } = data;
+  const maxCount = Math.max(
+    counts.upcomingEvents,
+    counts.ministries,
+    counts.growthGroups,
+    counts.pendingPastoralCareRequests,
+    counts.activeUsers
+  );
 
   return (
     <div className="flex flex-col gap-6">
@@ -27,20 +34,23 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
-        <StatCard icon={<CalendarIcon className="h-5 w-5" />} label="Eventos" value={counts.upcomingEvents} tone="accent" />
-        <StatCard icon={<UsersIcon className="h-5 w-5" />} label="Ministérios" value={counts.ministries} tone="warm" />
-        <StatCard icon={<HeartIcon className="h-5 w-5" />} label="Grupos" value={counts.growthGroups} tone="accent" />
+        <StatCard icon={<CalendarIcon className="h-5 w-5" />} label="Eventos" value={counts.upcomingEvents} tone="accent" max={maxCount} />
+        <StatCard icon={<UsersIcon className="h-5 w-5" />} label="Ministérios" value={counts.ministries} tone="warm" max={maxCount} />
+        <StatCard icon={<HeartIcon className="h-5 w-5" />} label="Grupos" value={counts.growthGroups} tone="accent" max={maxCount} />
         <StatCard
           icon={<ChatIcon className="h-5 w-5" />}
           label="Pedidos pastorais"
           value={counts.pendingPastoralCareRequests}
           tone="warm"
+          max={maxCount}
         />
-        <StatCard icon={<UsersIcon className="h-5 w-5" />} label="Membros ativos" value={counts.activeUsers} tone="accent" />
+        <StatCard icon={<UsersIcon className="h-5 w-5" />} label="Membros ativos" value={counts.activeUsers} tone="accent" max={maxCount} />
       </div>
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <WeeklyAccessChart data={accessesByDay} />
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          <WeeklyAccessChart data={accessesByDay} />
+        </div>
         <MinistryAccessChart data={accessesByMinistry} />
       </div>
     </div>
