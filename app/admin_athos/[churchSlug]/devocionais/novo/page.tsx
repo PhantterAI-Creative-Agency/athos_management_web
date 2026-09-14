@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createDevotional } from "@/api-client/devotionals";
 import { DevotionalForm } from "@/components/admin/DevotionalForm";
+import { FormPageHeader } from "@/components/admin/form-layout/FormPageHeader";
 
 export default function NewDevotionalPage({
   params,
@@ -24,8 +25,12 @@ export default function NewDevotionalPage({
   });
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <h2 className="mb-5 text-2xl font-semibold">Novo Devocional</h2>
+    <div className="mx-auto max-w-4xl">
+      <FormPageHeader
+        title="Novo Devocional"
+        backHref={`/admin_athos/${churchSlug}/devocionais`}
+        backLabel="Devocionais"
+      />
       <DevotionalForm onSubmit={(data) => mutation.mutate(data)} isSubmitting={mutation.isPending} />
     </div>
   );

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getJingle, updateJingle } from "@/api-client/jingles";
 import { JingleForm } from "@/components/admin/JingleForm";
+import { FormPageHeader } from "@/components/admin/form-layout/FormPageHeader";
 
 export default function EditJinglePage({
   params,
@@ -31,8 +32,12 @@ export default function EditJinglePage({
   if (isLoading || !jingle) return <p className="text-sm text-text-muted">Carregando...</p>;
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <h2 className="mb-5 text-2xl font-semibold">Editar Vinheta</h2>
+    <div className="mx-auto max-w-4xl">
+      <FormPageHeader
+        title="Editar Vinheta"
+        backHref={`/admin_athos/${churchSlug}/vinhetas`}
+        backLabel="Vinhetas"
+      />
       <JingleForm
         initialJingle={jingle}
         onSubmit={(data) => mutation.mutate(data)}

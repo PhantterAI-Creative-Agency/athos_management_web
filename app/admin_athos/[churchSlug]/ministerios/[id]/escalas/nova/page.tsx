@@ -8,6 +8,7 @@ import { createSchedule } from "@/api-client/ministrySchedules";
 import { listUsers } from "@/api-client/users";
 import { MinistryScheduleGuard } from "@/components/MinistryScheduleGuard";
 import { MinistryScheduleForm } from "@/components/admin/MinistryScheduleForm";
+import { FormPageHeader } from "@/components/admin/form-layout/FormPageHeader";
 
 export default function NewMinistrySchedulePage({
   params,
@@ -41,7 +42,11 @@ export default function NewMinistrySchedulePage({
   return (
     <MinistryScheduleGuard ministryId={id}>
       <div className="mx-auto max-w-2xl">
-        <h2 className="mb-5 text-2xl font-semibold">Nova Escala</h2>
+        <FormPageHeader
+          title="Nova Escala"
+          backHref={`/admin_athos/${churchSlug}/ministerios/${id}/escalas`}
+          backLabel="Escalas"
+        />
         {!serviceFunctions || !volunteers ? (
           <p className="text-sm text-text-muted">Carregando...</p>
         ) : (

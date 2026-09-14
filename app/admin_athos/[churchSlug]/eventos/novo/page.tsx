@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createEvent } from "@/api-client/events";
 import { EventForm } from "@/components/admin/EventForm";
+import { FormPageHeader } from "@/components/admin/form-layout/FormPageHeader";
 
 export default function NewEventPage({
   params,
@@ -24,8 +25,12 @@ export default function NewEventPage({
   });
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <h2 className="mb-5 text-2xl font-semibold">Novo Evento</h2>
+    <div className="mx-auto max-w-4xl">
+      <FormPageHeader
+        title="Novo Evento"
+        backHref={`/admin_athos/${churchSlug}/eventos`}
+        backLabel="Eventos"
+      />
       <EventForm onSubmit={(data) => mutation.mutate(data)} isSubmitting={mutation.isPending} />
     </div>
   );

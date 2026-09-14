@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createMedia } from "@/api-client/media";
 import { MediaForm } from "@/components/admin/MediaForm";
+import { FormPageHeader } from "@/components/admin/form-layout/FormPageHeader";
 
 export default function NewMediaPage({
   params,
@@ -25,7 +26,11 @@ export default function NewMediaPage({
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h2 className="mb-5 text-2xl font-semibold">Nova Mídia</h2>
+      <FormPageHeader
+        title="Nova Mídia"
+        backHref={`/admin_athos/${churchSlug}/midias`}
+        backLabel="Mídias"
+      />
       <MediaForm onSubmit={(data) => mutation.mutate(data)} isSubmitting={mutation.isPending} />
     </div>
   );

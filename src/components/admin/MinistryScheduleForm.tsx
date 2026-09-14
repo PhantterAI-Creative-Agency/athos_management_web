@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { ServiceFunctionDTO, MinistryVolunteerDTO } from "@/api-client/ministries";
 import type { MinistryScheduleDTO, MinistryScheduleInputDTO } from "@/api-client/ministrySchedules";
 import { MultiSelect } from "@/components/ui/MultiSelect";
+import { FormSection } from "@/components/admin/form-layout/FormSection";
 
 function toDateInputValue(iso?: string): string {
   if (!iso) return "";
@@ -44,7 +45,7 @@ export function MinistryScheduleForm({
 
   return (
     <form
-      className="flex flex-col gap-4 rounded-2xl bg-surface p-4"
+      className="flex flex-col gap-6"
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit({
@@ -58,60 +59,66 @@ export function MinistryScheduleForm({
         });
       }}
     >
-      <label className="block">
-        <span className="mb-1 block text-sm font-medium">Data</span>
-        <input
-          type="date"
-          required
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
-        />
-      </label>
-
-      <label className="block">
-        <span className="mb-1 block text-sm font-medium">Título (opcional)</span>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Ex.: Culto de domingo"
-          className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
-        />
-      </label>
-
-      {serviceFunctions.length === 0 && (
-        <p className="text-sm text-text-muted">
-          Este ministério ainda não tem funções cadastradas — cadastre antes de montar a escala.
-        </p>
-      )}
-
-      {serviceFunctions.map((fn) => (
-        <div key={fn.id}>
-          <span className="mb-1 block text-sm font-medium">{fn.name}</span>
-          <MultiSelect
-            options={volunteerOptions}
-            selected={assignments[fn.id] ?? []}
-            onChange={(ids) => setAssignments((prev) => ({ ...prev, [fn.id]: ids }))}
-            placeholder="Nenhum voluntário ativo neste ministério"
+      <FormSection title="Detalhes">
+        <label className="block">
+          <span className="mb-1 block text-sm font-medium">Data</span>
+          <input
+            type="date"
+            required
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
           />
-        </div>
-      ))}
+        </label>
 
-      <label className="block">
-        <span className="mb-1 block text-sm font-medium">Observações (opcional)</span>
-        <textarea
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          rows={3}
-          className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
-        />
-      </label>
+        <label className="block">
+          <span className="mb-1 block text-sm font-medium">Título (opcional)</span>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Ex.: Culto de domingo"
+            className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
+          />
+        </label>
+      </FormSection>
+
+      <FormSection title="Escalação">
+        {serviceFunctions.length === 0 && (
+          <p className="text-sm text-text-muted">
+            Este ministério ainda não tem funções cadastradas — cadastre antes de montar a escala.
+          </p>
+        )}
+
+        {serviceFunctions.map((fn) => (
+          <div key={fn.id}>
+            <span className="mb-1 block text-sm font-medium">{fn.name}</span>
+            <MultiSelect
+              options={volunteerOptions}
+              selected={assignments[fn.id] ?? []}
+              onChange={(ids) => setAssignments((prev) => ({ ...prev, [fn.id]: ids }))}
+              placeholder="Nenhum voluntário ativo neste ministério"
+            />
+          </div>
+        ))}
+      </FormSection>
+
+      <FormSection title="Observações">
+        <label className="block">
+          <span className="mb-1 block text-sm font-medium">Observações (opcional)</span>
+          <textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            rows={3}
+            className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
+          />
+        </label>
+      </FormSection>
 
       <button
         type="submit"
         disabled={isSubmitting || serviceFunctions.length === 0}
-        className="label-caps mt-2 rounded-full bg-accent px-6 py-2.5 text-background transition-colors hover:bg-accent/90 disabled:opacity-50"
+        className="label-caps rounded-full bg-accent px-6 py-2.5 text-background transition-colors hover:bg-accent/90 disabled:opacity-50 self-start"
       >
         {isSubmitting ? "Salvando..." : "Salvar"}
       </button>
