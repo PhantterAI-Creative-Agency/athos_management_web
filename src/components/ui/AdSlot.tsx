@@ -1,17 +1,8 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "@/hooks/useAuth";
+import { useAd } from "@/hooks/useAd";
 import { CoverImage } from "@/components/ui/CoverImage";
-import {
-  getPublicRandomAd,
-  getRandomAd,
-  registerAdClick,
-  registerPublicAdClick,
-  type AdFormat,
-} from "@/api-client/ads";
-
-const CHURCH_SLUG = process.env.NEXT_PUBLIC_CHURCH_SLUG ?? "principios-de-vida";
+import type { AdFormat } from "@/api-client/ads";
 
 export function AdSlot({
   placement,
@@ -22,25 +13,15 @@ export function AdSlot({
   format: AdFormat;
   className?: string;
 }) {
-  const { user } = useAuth();
-
-  const { data: ad } = useQuery({
-    queryKey: ["ads", "random", placement, format, user?.id],
-    queryFn: () =>
-      user ? getRandomAd(placement, format) : getPublicRandomAd(CHURCH_SLUG, placement, format),
-  });
+  const { ad, registerClick } = useAd(placement, format);
 
   if (!ad) return null;
 
-  function handleClick() {
-    if (user) {
-      registerAdClick(ad!.id).catch(() => {});
-    } else {
-      registerPublicAdClick(CHURCH_SLUG, ad!.id).catch(() => {});
-    }
-  }
-
-  const ratioClass = format === "slide" ? "aspect-[1200/450]" : "aspect-square";
+  const ratioClass = className.includes("aspect-")
+    ? ""
+    : format === "slide"
+      ? "aspect-[1200/450]"
+      : "aspect-square";
 
   const content = (
     <CoverImage label={ad.title} seed={`ad-${ad.id}`} src={ad.imageUrl} className={`${ratioClass} ${className}`}>
@@ -53,7 +34,7 @@ export function AdSlot({
   if (!ad.linkUrl) return content;
 
   return (
-    <a href={ad.linkUrl} target="_blank" rel="noopener noreferrer sponsored" onClick={handleClick}>
+    <a href={ad.linkUrl} target="_blank" rel="noopener noreferrer sponsored" onClick={registerClick}>
       {content}
     </a>
   );
