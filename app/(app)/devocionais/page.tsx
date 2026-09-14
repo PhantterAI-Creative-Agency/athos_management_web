@@ -24,12 +24,9 @@ function DevocionaisContent() {
       <h2 className="mb-1 text-2xl font-semibold">Devocionais</h2>
       <p className="mb-5 text-sm text-text-muted">Alimente sua fé diariamente</p>
 
-      <div className="mx-auto mb-5 w-full max-w-[300px]">
-        <AdSlot placement="devocionais_grid" format="card" />
-      </div>
-
       <div className="flex flex-col gap-6 md:flex-row">
-        <div className="flex flex-col gap-2 md:w-64 md:flex-none">
+        <div className="flex flex-col gap-4 md:w-64 md:flex-none">
+          <AdSlot placement="devocionais_grid" format="card" className="rounded-xl" />
           {devotionals?.map((dev) => (
             <button
               key={dev.id}
