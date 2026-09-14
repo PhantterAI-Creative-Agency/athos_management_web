@@ -23,11 +23,8 @@ function MidiasContent() {
       <h2 className="mb-1 text-2xl font-semibold">Mídias</h2>
       <p className="mb-5 text-sm text-text-muted">Pregações, louvores e conteúdos da igreja</p>
 
-      <div className="mx-auto mb-5 w-full max-w-[300px]">
-        <AdSlot placement="midias_grid" format="card" />
-      </div>
-
       <div className="flex flex-col gap-6 md:grid md:grid-cols-2 lg:grid-cols-3">
+        <AdSlot placement="midias_grid" format="card" className="h-[200px] aspect-auto" />
         {mediaList?.map((item) => (
           <div key={item.id} className="overflow-hidden rounded-2xl bg-surface">
             {item.type === "video" && item.youtubeId ? (

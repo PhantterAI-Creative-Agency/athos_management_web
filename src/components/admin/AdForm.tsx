@@ -13,7 +13,9 @@ const CARD_HEIGHT = 600;
 
 const PLACEMENT_OPTIONS: { value: string; label: string; format: AdFormat }[] = [
   { value: "home_hero", label: "Home — Banner principal (slide)", format: "slide" },
+  { value: "home_cultos", label: "Home — Após Cultos (slide)", format: "slide" },
   { value: "home_grid", label: "Home — Grade (card)", format: "card" },
+  { value: "home_devocionais", label: "Home — Após Devocionais (slide)", format: "slide" },
   { value: "eventos_grid", label: "Eventos (card)", format: "card" },
   { value: "midias_grid", label: "Mídias (card)", format: "card" },
   { value: "devocionais_grid", label: "Devocionais (card)", format: "card" },

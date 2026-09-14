@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
 import { AdSlot } from "@/components/ui/AdSlot";
@@ -84,26 +84,33 @@ function EventosContent() {
         />
       </div>
 
-      <div className="mx-auto mb-5 w-full max-w-[300px]">
-        <AdSlot placement="eventos_grid" format="card" />
-      </div>
-
       <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
-        {displayEvents.map((event) => (
-          <EventCard
-            key={event.id}
-            event={{
-              id: event.id,
-              title: event.title,
-              day: event.day || "",
-              month: event.month || "",
-              schedule: event.schedule || new Date(event.date).toLocaleDateString("pt-BR"),
-              location: event.location || "",
-              price: event.price && event.price > 0 ? `Pago · R$ ${event.price}` : "Gratuito",
-              status: (event.status || "inscricoes") as "inscricoes" | "participando" | "participou",
-            }}
-          />
+        {displayEvents.map((event, index) => (
+          <Fragment key={event.id}>
+            <EventCard
+              event={{
+                id: event.id,
+                title: event.title,
+                day: event.day || "",
+                month: event.month || "",
+                schedule: event.schedule || new Date(event.date).toLocaleDateString("pt-BR"),
+                location: event.location || "",
+                price: event.price && event.price > 0 ? `Pago · R$ ${event.price}` : "Gratuito",
+                status: (event.status || "inscricoes") as "inscricoes" | "participando" | "participou",
+              }}
+            />
+            {index === 0 && (
+              <div className="md:col-span-2">
+                <AdSlot placement="eventos_grid" format="card" className="h-full aspect-video md:aspect-auto" />
+              </div>
+            )}
+          </Fragment>
         ))}
+        {displayEvents.length === 0 && (
+          <div className="mx-auto w-full max-w-[300px]">
+            <AdSlot placement="eventos_grid" format="card" />
+          </div>
+        )}
       </div>
     </div>
   );

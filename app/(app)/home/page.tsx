@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
 import { AdSection } from "@/components/ui/AdSection";
+import { AdSlot } from "@/components/ui/AdSlot";
 import { CoverImage } from "@/components/ui/CoverImage";
 import { Tag } from "@/components/ui/Tag";
 import { YouTubeEmbed } from "@/components/ui/YouTubeEmbed";
@@ -275,12 +276,18 @@ function HomeContent() {
       </section>
 
       <Reveal as="section" className="bg-background">
-        <div className="mx-auto max-w-3xl px-5 pb-8 pt-6 md:max-w-5xl md:px-12 md:py-10">
+        <div className="mx-auto max-w-3xl px-5 pt-6 md:max-w-5xl md:px-12 md:pt-10">
           <div className="mb-1">
             <p className="text-[22px] font-semibold">{greeting}, {(profile?.name || user?.name)?.split(" ")[0] || "Querido(a)"}</p>
           </div>
           <p className="mb-5 text-sm text-text-muted">{dateStr}</p>
+        </div>
+      </Reveal>
 
+      <AdSection placement="home_cultos" format="slide" background="bg-surface" />
+
+      <Reveal as="section" className="bg-background">
+        <div className="mx-auto max-w-3xl px-5 pb-8 pt-6 md:max-w-5xl md:px-12 md:py-10">
           {church?.serviceSchedule && church.serviceSchedule.length > 0 && (
             <ServiceScheduleSection items={church.serviceSchedule} />
           )}
@@ -320,32 +327,32 @@ function HomeContent() {
               <Link href="/eventos" className="text-xs text-accent">Ver tudo</Link>
             </div>
             <RevealStagger className="scrollbar-hide flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory">
-              {events.map((item) => (
-                <RevealItem key={item.id} className="w-[260px] flex-none snap-start md:w-[300px]">
-                  <CoverImage
-                    label={item.title}
-                    seed={`event-${item.id}`}
-                    src={item.imageUrl}
-                    className="aspect-video rounded-lg"
-                  />
-                  <p className="mb-0.5 mt-2 text-[10px] uppercase tracking-wide text-accent md:text-xs">
-                    {formatEventSchedule(item.date)}
-                    {item.location && ` · ${item.location}`}
-                  </p>
-                  <p className="text-[11px] font-semibold leading-tight md:text-sm">{item.title}</p>
-                </RevealItem>
+              {events.map((item, index) => (
+                <Fragment key={item.id}>
+                  <RevealItem className="w-[260px] flex-none snap-start md:w-[300px]">
+                    <CoverImage
+                      label={item.title}
+                      seed={`event-${item.id}`}
+                      src={item.imageUrl}
+                      className="aspect-video rounded-lg"
+                    />
+                    <p className="mb-0.5 mt-2 text-[10px] uppercase tracking-wide text-accent md:text-xs">
+                      {formatEventSchedule(item.date)}
+                      {item.location && ` · ${item.location}`}
+                    </p>
+                    <p className="text-[11px] font-semibold leading-tight md:text-sm">{item.title}</p>
+                  </RevealItem>
+                  {index === 0 && (
+                    <RevealItem className="w-[260px] flex-none snap-start md:w-[300px]">
+                      <AdSlot placement="home_grid" format="card" className="aspect-video rounded-lg" />
+                    </RevealItem>
+                  )}
+                </Fragment>
               ))}
             </RevealStagger>
           </div>
         </Reveal>
       )}
-
-      <AdSection
-        placement="home_grid"
-        format="card"
-        background="bg-surface"
-        className="w-[260px] aspect-video rounded-lg md:w-[300px]"
-      />
 
       {latestMedia && latestMedia.length > 0 && (
         <Reveal as="section" className="bg-background" id="midias">
@@ -430,6 +437,8 @@ function HomeContent() {
           </div>
         </Reveal>
       )}
+
+      <AdSection placement="home_devocionais" format="slide" background="bg-background" />
 
       {ministries && ministries.length > 0 && (
         <Reveal as="section" className="bg-surface" id="ministerios">
