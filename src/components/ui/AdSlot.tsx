@@ -15,13 +15,23 @@ export function AdSlot({
 }) {
   const { ad, registerClick } = useAd(placement, format);
 
-  if (!ad) return null;
-
   const ratioClass = className.includes("aspect-")
     ? ""
     : format === "slide"
       ? "aspect-[1200/450]"
       : "aspect-square";
+
+  if (!ad) {
+    return (
+      <div
+        className={`flex items-center justify-center rounded-2xl border border-dashed border-divider bg-surface/50 ${ratioClass} ${className}`}
+      >
+        <span className="px-3 text-center text-[11px] uppercase tracking-wide text-text-muted">
+          Espaço para anúncio
+        </span>
+      </div>
+    );
+  }
 
   const content = (
     <CoverImage label={ad.title} seed={`ad-${ad.id}`} src={ad.imageUrl} className={`${ratioClass} ${className}`}>
