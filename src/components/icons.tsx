@@ -122,6 +122,26 @@ export function PlayIcon(props: IconProps) {
   );
 }
 
+export function PauseIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <rect x="5" y="4" width="5" height="16" rx="1" />
+      <rect x="14" y="4" width="5" height="16" rx="1" />
+    </svg>
+  );
+}
+
+export function RadioIcon(props: IconProps) {
+  return base(
+    props,
+    <>
+      <circle cx="12" cy="14" r="3" />
+      <path d="M4.5 9.5a10 10 0 0115 0M2 6.5a14 14 0 0120 0" />
+      <path d="M12 14v.01" />
+    </>
+  );
+}
+
 export function DetailsIcon(props: IconProps) {
   return base(
     props,
