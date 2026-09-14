@@ -48,7 +48,7 @@ export function AdminSidebar({
               active ? "text-foreground md:bg-accent-tint md:text-accent-tint-text" : "text-text-muted"
             }`}
           >
-            <Icon className="h-4 w-4 flex-none" />
+            <Icon className="text-base flex-none" />
             <span>{label}</span>
           </Link>
         );

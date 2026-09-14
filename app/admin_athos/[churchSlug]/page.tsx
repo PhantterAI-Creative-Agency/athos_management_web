@@ -34,17 +34,17 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
-        <StatCard icon={<CalendarIcon className="h-5 w-5" />} label="Eventos" value={counts.upcomingEvents} tone="accent" max={maxCount} />
-        <StatCard icon={<UsersIcon className="h-5 w-5" />} label="Ministérios" value={counts.ministries} tone="warm" max={maxCount} />
-        <StatCard icon={<HeartIcon className="h-5 w-5" />} label="Grupos" value={counts.growthGroups} tone="accent" max={maxCount} />
+        <StatCard icon={<CalendarIcon className="text-xl" />} label="Eventos" value={counts.upcomingEvents} tone="accent" max={maxCount} />
+        <StatCard icon={<UsersIcon className="text-xl" />} label="Ministérios" value={counts.ministries} tone="warm" max={maxCount} />
+        <StatCard icon={<HeartIcon className="text-xl" />} label="Grupos" value={counts.growthGroups} tone="accent" max={maxCount} />
         <StatCard
-          icon={<ChatIcon className="h-5 w-5" />}
+          icon={<ChatIcon className="text-xl" />}
           label="Pedidos pastorais"
           value={counts.pendingPastoralCareRequests}
           tone="warm"
           max={maxCount}
         />
-        <StatCard icon={<UsersIcon className="h-5 w-5" />} label="Membros ativos" value={counts.activeUsers} tone="accent" max={maxCount} />
+        <StatCard icon={<UsersIcon className="text-xl" />} label="Membros ativos" value={counts.activeUsers} tone="accent" max={maxCount} />
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">

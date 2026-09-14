@@ -115,13 +115,13 @@ export function BannerUpload({
           />
         ) : (
           <span className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 text-text-muted">
-            <CameraIcon className="h-6 w-6" />
+            <CameraIcon className="text-2xl" />
             <span className="text-xs">Enviar imagem</span>
           </span>
         )}
 
         <span className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/40">
-          <CameraIcon className="h-6 w-6 text-white opacity-0 transition-opacity group-hover:opacity-100" />
+          <CameraIcon className="text-2xl text-white opacity-0 transition-opacity group-hover:opacity-100" />
         </span>
 
         {uploading && (

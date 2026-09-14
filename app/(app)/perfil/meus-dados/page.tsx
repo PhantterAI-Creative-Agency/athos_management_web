@@ -463,7 +463,7 @@ export default function MeusDadosPage() {
                     className="flex items-center gap-3 border-b border-divider py-3 text-sm last:border-b-0"
                   >
                     <span className="flex-1">{query.data?.name || "Carregando..."}</span>
-                    <ChevronRightIcon className="h-3.5 w-3.5 text-text-muted" />
+                    <ChevronRightIcon className="text-sm text-text-muted" />
                   </Link>
                 ))}
               </div>

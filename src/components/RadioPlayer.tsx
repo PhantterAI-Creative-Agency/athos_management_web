@@ -72,7 +72,7 @@ export function RadioPlayer() {
           aria-pressed={playing}
           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-foreground transition-colors hover:bg-foreground/5"
         >
-          {playing ? <PauseIcon className="h-4 w-4" /> : <RadioIcon className="h-4 w-4" />}
+          {playing ? <PauseIcon className="text-base" /> : <RadioIcon className="text-base" />}
         </button>
         {playing && currentTrack && (
           <>
@@ -83,7 +83,7 @@ export function RadioPlayer() {
               aria-label="Próxima vinheta"
               className="shrink-0 text-text-muted transition-colors hover:text-foreground"
             >
-              <PlayIcon className="h-3 w-3" />
+              <PlayIcon className="text-xs" />
             </button>
           </>
         )}

@@ -22,7 +22,7 @@ export function EventCard({ event }: { event: EventItem }) {
         <div className="flex items-center justify-between">
           <Tag>{event.price}</Tag>
           <div className="flex items-center gap-2 text-xs font-semibold text-accent">
-            <DetailsIcon className="h-4 w-4" />
+            <DetailsIcon className="text-base" />
             Detalhes
           </div>
         </div>
