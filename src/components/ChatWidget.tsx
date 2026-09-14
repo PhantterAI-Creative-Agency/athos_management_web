@@ -5,7 +5,6 @@ import { useMutation } from "@tanstack/react-query";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { sendChatMessage, sendGuestChatMessage, type ChatMessageCategory } from "@/api-client/aiChat";
-import { ChatIcon } from "@/components/icons";
 
 interface ChatEntry {
   role: "user" | "assistant";
@@ -160,7 +159,7 @@ export function ChatWidget({ mode, churchSlug }: ChatWidgetProps) {
         className="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-white shadow-lg"
         aria-label="Abrir assistente"
       >
-        <ChatIcon className="h-6 w-6" />
+        <i className="fa-solid fa-comment text-2xl"></i>
       </button>
     </div>
   );
