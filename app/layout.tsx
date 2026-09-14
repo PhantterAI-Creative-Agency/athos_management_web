@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { AuthenticatedChatWidget } from "@/components/AuthenticatedChatWidget";
+import { RadioPlayer } from "@/components/RadioPlayer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({
         <Providers>
           {children}
           <AuthenticatedChatWidget />
+          <RadioPlayer />
         </Providers>
         <ThemeToggle className="fixed bottom-20 left-4 z-50 md:bottom-6" />
       </body>
