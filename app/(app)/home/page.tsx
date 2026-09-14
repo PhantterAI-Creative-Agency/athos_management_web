@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
-import { AdSlot } from "@/components/ui/AdSlot";
+import { AdSection } from "@/components/ui/AdSection";
 import { CoverImage } from "@/components/ui/CoverImage";
 import { Tag } from "@/components/ui/Tag";
 import { YouTubeEmbed } from "@/components/ui/YouTubeEmbed";
@@ -307,15 +307,13 @@ function HomeContent() {
               </CoverImage>
             </Link>
           )}
-
-          <div className="mt-4">
-            <AdSlot placement="home_hero" format="slide" />
-          </div>
         </div>
       </Reveal>
 
+      <AdSection placement="home_hero" format="slide" background="bg-surface" />
+
       {events && events.length > 0 && (
-        <Reveal as="section" className="bg-surface" id="eventos">
+        <Reveal as="section" className="bg-background" id="eventos">
           <div className="mx-auto max-w-3xl px-5 py-7 md:max-w-5xl md:px-12">
             <div className="mb-2 flex items-baseline justify-between">
               <SectionTitle>Próximos Eventos</SectionTitle>
@@ -342,6 +340,13 @@ function HomeContent() {
         </Reveal>
       )}
 
+      <AdSection
+        placement="home_grid"
+        format="card"
+        background="bg-surface"
+        className="w-[260px] aspect-video rounded-lg md:w-[300px]"
+      />
+
       {latestMedia && latestMedia.length > 0 && (
         <Reveal as="section" className="bg-background" id="midias">
           <div className="mx-auto max-w-3xl px-5 py-7 md:max-w-5xl md:px-12">
@@ -353,12 +358,6 @@ function HomeContent() {
           </div>
         </Reveal>
       )}
-
-      <div className="mx-auto max-w-3xl px-5 md:max-w-5xl md:px-12">
-        <div className="mx-auto w-full max-w-[300px]">
-          <AdSlot placement="home_grid" format="card" />
-        </div>
-      </div>
 
       {featuredEvents.length > 0 && (
         <Reveal as="section" className="bg-[#1a1a1a] py-12 md:py-16">
