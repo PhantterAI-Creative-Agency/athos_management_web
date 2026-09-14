@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createMinistry } from "@/api-client/ministries";
 import { MinistryForm } from "@/components/admin/MinistryForm";
+import { FormPageHeader } from "@/components/admin/form-layout/FormPageHeader";
 
 export default function NewMinistryPage({
   params,
@@ -24,8 +25,12 @@ export default function NewMinistryPage({
   });
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <h2 className="mb-5 text-2xl font-semibold">Novo Ministério</h2>
+    <div className="mx-auto max-w-4xl">
+      <FormPageHeader
+        title="Novo Ministério"
+        backHref={`/admin_athos/${churchSlug}/ministerios`}
+        backLabel="Ministérios"
+      />
       <MinistryForm onSubmit={(data) => mutation.mutate(data)} isSubmitting={mutation.isPending} />
     </div>
   );

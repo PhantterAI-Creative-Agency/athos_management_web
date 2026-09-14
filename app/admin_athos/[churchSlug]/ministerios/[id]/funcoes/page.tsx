@@ -6,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMinistry, getServiceFunctions, replaceServiceFunctions } from "@/api-client/ministries";
 import { MinistryScheduleGuard } from "@/components/MinistryScheduleGuard";
 import { ServiceFunctionsForm } from "@/components/admin/ServiceFunctionsForm";
+import { FormPageHeader } from "@/components/admin/form-layout/FormPageHeader";
 
 export default function MinistryServiceFunctionsPage({
   params,
@@ -33,7 +34,11 @@ export default function MinistryServiceFunctionsPage({
   return (
     <MinistryScheduleGuard ministryId={id}>
       <div className="mx-auto max-w-2xl">
-        <h2 className="mb-5 text-2xl font-semibold">Funções — {ministry?.name}</h2>
+        <FormPageHeader
+          title={`Funções — ${ministry?.name ?? ""}`}
+          backHref={`/admin_athos/${churchSlug}/ministerios/${id}/escalas`}
+          backLabel="Escalas"
+        />
         <p className="mb-4 text-sm text-text-muted">
           Defina as funções que compõem a escala deste ministério (ex.: Instrumento, Vocal, Mesa,
           Datashow). Cada função pode receber mais de um voluntário na escala.

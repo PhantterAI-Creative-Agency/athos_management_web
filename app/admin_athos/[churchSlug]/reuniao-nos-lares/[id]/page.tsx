@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getGrowthGroup, updateGrowthGroup } from "@/api-client/growthGroups";
 import { GrowthGroupForm } from "@/components/admin/GrowthGroupForm";
+import { FormPageHeader } from "@/components/admin/form-layout/FormPageHeader";
 
 export default function EditGrowthGroupPage({
   params,
@@ -32,7 +33,11 @@ export default function EditGrowthGroupPage({
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h2 className="mb-5 text-2xl font-semibold">Editar Grupo</h2>
+      <FormPageHeader
+        title="Editar Grupo"
+        backHref={`/admin_athos/${churchSlug}/reuniao-nos-lares`}
+        backLabel="Reunião nos Lares"
+      />
       <GrowthGroupForm
         initialGroup={group}
         onSubmit={(data) => mutation.mutate(data)}

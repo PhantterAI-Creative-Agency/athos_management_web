@@ -8,6 +8,7 @@ import { deleteSchedule, getSchedule, updateSchedule } from "@/api-client/minist
 import { listUsers } from "@/api-client/users";
 import { MinistryScheduleGuard } from "@/components/MinistryScheduleGuard";
 import { MinistryScheduleForm } from "@/components/admin/MinistryScheduleForm";
+import { FormPageHeader } from "@/components/admin/form-layout/FormPageHeader";
 
 export default function EditMinistrySchedulePage({
   params,
@@ -53,18 +54,22 @@ export default function EditMinistrySchedulePage({
   return (
     <MinistryScheduleGuard ministryId={id}>
       <div className="mx-auto max-w-2xl">
-        <div className="mb-5 flex items-center justify-between">
-          <h2 className="text-2xl font-semibold">Editar Escala</h2>
-          <button
-            type="button"
-            onClick={() => {
-              if (confirm("Excluir esta escala?")) remove.mutate();
-            }}
-            className="text-sm font-medium text-red-600"
-          >
-            Excluir
-          </button>
-        </div>
+        <FormPageHeader
+          title="Editar Escala"
+          backHref={`/admin_athos/${churchSlug}/ministerios/${id}/escalas`}
+          backLabel="Escalas"
+          actions={
+            <button
+              type="button"
+              onClick={() => {
+                if (confirm("Excluir esta escala?")) remove.mutate();
+              }}
+              className="text-sm font-medium text-red-600"
+            >
+              Excluir
+            </button>
+          }
+        />
         {!schedule || !serviceFunctions || !volunteers ? (
           <p className="text-sm text-text-muted">Carregando...</p>
         ) : (

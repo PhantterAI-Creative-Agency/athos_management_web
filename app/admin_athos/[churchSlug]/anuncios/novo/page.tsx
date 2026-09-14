@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createAd } from "@/api-client/ads";
 import { AdForm } from "@/components/admin/AdForm";
+import { FormPageHeader } from "@/components/admin/form-layout/FormPageHeader";
 
 export default function NewAdPage({
   params,
@@ -24,8 +25,12 @@ export default function NewAdPage({
   });
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <h2 className="mb-5 text-2xl font-semibold">Novo Anúncio</h2>
+    <div className="mx-auto max-w-4xl">
+      <FormPageHeader
+        title="Novo Anúncio"
+        backHref={`/admin_athos/${churchSlug}/anuncios`}
+        backLabel="Anúncios"
+      />
       <AdForm onSubmit={(data) => mutation.mutate(data)} isSubmitting={mutation.isPending} />
     </div>
   );

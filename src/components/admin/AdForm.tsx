@@ -3,6 +3,8 @@
 import { useState } from "react";
 import type { AdDTO, AdFormat, AdInputDTO } from "@/api-client/ads";
 import { BannerUpload } from "@/components/ui/BannerUpload";
+import { FormSection } from "@/components/admin/form-layout/FormSection";
+import { FormSidebarCard } from "@/components/admin/form-layout/FormSidebarCard";
 
 const SLIDE_WIDTH = 1200;
 const SLIDE_HEIGHT = 450;
@@ -49,7 +51,6 @@ export function AdForm({
 
   return (
     <form
-      className="flex flex-col gap-4 rounded-2xl bg-surface p-4"
       onSubmit={(e) => {
         e.preventDefault();
 
@@ -72,97 +73,109 @@ export function AdForm({
         });
       }}
     >
-      <label className="block">
-        <span className="mb-1 block text-sm font-medium">Posição</span>
-        <select
-          value={placement}
-          onChange={(e) => {
-            setPlacement(e.target.value);
-            setImageUrl("");
-          }}
-          className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
-        >
-          {PLACEMENT_OPTIONS.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </label>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_320px]">
+        <div className="flex flex-col gap-6">
+          <FormSection title="Anúncio">
+            <label className="block">
+              <span className="mb-1 block text-sm font-medium">Posição</span>
+              <select
+                value={placement}
+                onChange={(e) => {
+                  setPlacement(e.target.value);
+                  setImageUrl("");
+                }}
+                className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
+              >
+                {PLACEMENT_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </label>
 
-      <label className="block">
-        <span className="mb-1 block text-sm font-medium">Título / Anunciante</span>
-        <input
-          type="text"
-          required
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
-        />
-      </label>
+            <label className="block">
+              <span className="mb-1 block text-sm font-medium">Título / Anunciante</span>
+              <input
+                type="text"
+                required
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
+              />
+            </label>
 
-      <BannerUpload
-        label="Imagem do anúncio"
-        imageUrl={imageUrl}
-        targetWidth={targetWidth}
-        targetHeight={targetHeight}
-        onUpload={setImageUrl}
-      />
+            <label className="block">
+              <span className="mb-1 block text-sm font-medium">Link de destino (opcional)</span>
+              <input
+                type="url"
+                value={linkUrl}
+                onChange={(e) => setLinkUrl(e.target.value)}
+                placeholder="https://"
+                className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
+              />
+            </label>
+          </FormSection>
 
-      <label className="block">
-        <span className="mb-1 block text-sm font-medium">Link de destino (opcional)</span>
-        <input
-          type="url"
-          value={linkUrl}
-          onChange={(e) => setLinkUrl(e.target.value)}
-          placeholder="https://"
-          className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
-        />
-      </label>
+          <FormSection title="Imagem" description="Redimensionada automaticamente conforme a posição escolhida.">
+            <BannerUpload
+              label="Imagem do anúncio"
+              imageUrl={imageUrl}
+              targetWidth={targetWidth}
+              targetHeight={targetHeight}
+              onUpload={setImageUrl}
+            />
+          </FormSection>
+        </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <label className="block">
-          <span className="mb-1 block text-sm font-medium">Início da exibição (opcional)</span>
-          <input
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
-          />
-        </label>
+        <div className="flex flex-col gap-6">
+          <FormSidebarCard title="Status">
+            <label className="flex items-center gap-2 text-sm font-medium">
+              <input type="checkbox" checked={active} onChange={(e) => setActive(e.target.checked)} />
+              Ativo
+            </label>
+          </FormSidebarCard>
 
-        <label className="block">
-          <span className="mb-1 block text-sm font-medium">Fim da exibição (opcional)</span>
-          <input
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
-          />
-        </label>
+          <FormSidebarCard title="Publicação">
+            <label className="block">
+              <span className="mb-1 block text-sm font-medium">Início da exibição (opcional)</span>
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
+              />
+            </label>
+
+            <label className="block">
+              <span className="mb-1 block text-sm font-medium">Fim da exibição (opcional)</span>
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
+              />
+            </label>
+
+            <label className="block">
+              <span className="mb-1 block text-sm font-medium">Ordem (menor aparece primeiro em empates)</span>
+              <input
+                type="number"
+                value={order}
+                onChange={(e) => setOrder(e.target.value)}
+                className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
+              />
+            </label>
+          </FormSidebarCard>
+        </div>
       </div>
 
-      <label className="block">
-        <span className="mb-1 block text-sm font-medium">Ordem (menor aparece primeiro em empates)</span>
-        <input
-          type="number"
-          value={order}
-          onChange={(e) => setOrder(e.target.value)}
-          className="w-full rounded-xl border border-divider bg-background px-3 py-2 text-sm"
-        />
-      </label>
-
-      <label className="flex items-center gap-2 text-sm font-medium">
-        <input type="checkbox" checked={active} onChange={(e) => setActive(e.target.checked)} />
-        Ativo
-      </label>
-
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="label-caps mt-2 rounded-full bg-accent px-6 py-2.5 text-background transition-colors hover:bg-accent/90 disabled:opacity-50"
+        className="label-caps mt-6 rounded-full bg-accent px-6 py-2.5 text-background transition-colors hover:bg-accent/90 disabled:opacity-50"
       >
         {isSubmitting ? "Salvando..." : "Salvar"}
       </button>

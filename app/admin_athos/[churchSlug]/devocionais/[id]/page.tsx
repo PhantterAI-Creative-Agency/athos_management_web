@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getDevotional, updateDevotional } from "@/api-client/devotionals";
 import { DevotionalForm } from "@/components/admin/DevotionalForm";
+import { FormPageHeader } from "@/components/admin/form-layout/FormPageHeader";
 
 export default function EditDevotionalPage({
   params,
@@ -31,8 +32,12 @@ export default function EditDevotionalPage({
   if (isLoading || !devotional) return <p className="text-sm text-text-muted">Carregando...</p>;
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <h2 className="mb-5 text-2xl font-semibold">Editar Devocional</h2>
+    <div className="mx-auto max-w-4xl">
+      <FormPageHeader
+        title="Editar Devocional"
+        backHref={`/admin_athos/${churchSlug}/devocionais`}
+        backLabel="Devocionais"
+      />
       <DevotionalForm
         initialDevotional={devotional}
         onSubmit={(data) => mutation.mutate(data)}
