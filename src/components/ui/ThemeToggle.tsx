@@ -33,7 +33,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
       aria-pressed={isDark}
       className={`flex h-9 w-9 items-center justify-center rounded-full border border-divider bg-background text-foreground shadow-lg transition-colors hover:bg-foreground/5 ${className}`}
     >
-      {isDark ? <SunIcon className="h-4 w-4" /> : <MoonIcon className="h-4 w-4" />}
+      {isDark ? <SunIcon className="text-base" /> : <MoonIcon className="text-base" />}
     </button>
   );
 }

@@ -42,7 +42,7 @@ export function SocialLinks({
             aria-label={meta.label}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-divider text-foreground/70 transition-colors hover:border-accent hover:text-accent"
           >
-            <meta.icon className="h-4 w-4" />
+            <meta.icon className="text-base" />
           </a>
         );
       })}

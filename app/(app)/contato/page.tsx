@@ -55,7 +55,7 @@ function ContatoContent() {
             <div className="flex flex-col gap-6">
               <h3 className="text-section-title font-semibold">Informações de contato</h3>
               <div className="flex items-start gap-3">
-                <MailIcon className="mt-0.5 h-5 w-5 flex-none text-accent" />
+                <MailIcon className="mt-0.5 text-xl flex-none text-accent" />
                 <div>
                   <p className="text-sm font-semibold">E-mail</p>
                   <a href={`mailto:${email}`} className="text-sm text-text-muted hover:text-accent">
@@ -64,7 +64,7 @@ function ContatoContent() {
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <WhatsappIcon className="mt-0.5 h-5 w-5 flex-none text-accent" />
+                <WhatsappIcon className="mt-0.5 text-xl flex-none text-accent" />
                 <div>
                   <p className="text-sm font-semibold">WhatsApp</p>
                   <a
@@ -78,7 +78,7 @@ function ContatoContent() {
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <PinIcon className="mt-0.5 h-5 w-5 flex-none text-accent" />
+                <PinIcon className="mt-0.5 text-xl flex-none text-accent" />
                 <div>
                   <p className="text-sm font-semibold">Visite-nos</p>
                   <p className="text-sm text-text-muted">{address}</p>

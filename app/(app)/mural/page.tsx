@@ -7,7 +7,6 @@ import { CoverImage } from "@/components/ui/CoverImage";
 import { Tag } from "@/components/ui/Tag";
 import { useAuth } from "@/hooks/useAuth";
 import { listMural, createMuralPost, toggleMuralLike, deleteMuralPost } from "@/api-client/mural";
-import { HeartIcon } from "@/components/icons";
 
 function MuralContent() {
   const { user } = useAuth();
@@ -129,7 +128,7 @@ function MuralContent() {
                 onClick={() => likeMutation.mutate(post.id)}
                 className={`flex items-center gap-1 text-xs ${post.liked ? "text-red-500" : "text-text-muted"}`}
               >
-                <HeartIcon className={`h-4 w-4 ${post.liked ? "fill-red-500 stroke-red-500" : ""}`} />
+                <i className={`${post.liked ? "fa-solid" : "fa-regular"} fa-heart text-base`} aria-hidden="true" />
                 {post.likesCount}
               </button>
               {post.audience !== "all" && <Tag>{post.audience}</Tag>}

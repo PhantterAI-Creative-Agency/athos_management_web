@@ -75,7 +75,7 @@ function MediaCarousel({ items }: { items: MediaDTO[] }) {
         aria-label="Mídias anteriores"
         className="absolute left-0 top-[38%] flex h-8 w-8 -translate-x-1/3 -translate-y-1/2 items-center justify-center rounded-full bg-background/90 shadow-md backdrop-blur-sm"
       >
-        <ChevronRightIcon className="h-4 w-4 rotate-180" />
+        <ChevronRightIcon className="text-base rotate-180" />
       </button>
       <button
         type="button"
@@ -83,7 +83,7 @@ function MediaCarousel({ items }: { items: MediaDTO[] }) {
         aria-label="Próximas mídias"
         className="absolute right-0 top-[38%] flex h-8 w-8 -translate-y-1/2 translate-x-1/3 items-center justify-center rounded-full bg-background/90 shadow-md backdrop-blur-sm"
       >
-        <ChevronRightIcon className="h-4 w-4" />
+        <ChevronRightIcon className="text-base" />
       </button>
     </div>
   );
@@ -126,7 +126,7 @@ function ServiceScheduleSection({ items }: { items: ChurchServiceScheduleDTO[] }
             key={`${item.day}-${item.time}-${index}`}
             className="flex items-center gap-3 rounded-lg bg-surface px-4 py-3"
           >
-            <ClockIcon className="h-5 w-5 flex-none text-accent" />
+            <ClockIcon className="text-xl flex-none text-accent" />
             <div className="min-w-0">
               <p className="text-sm font-semibold leading-tight">
                 {item.day} · {item.time}
@@ -161,21 +161,21 @@ function ContactSection({
 
           <div className="flex flex-col gap-6">
             <div className="flex items-start gap-3">
-              <MailIcon className="mt-0.5 h-5 w-5 flex-none text-accent" />
+              <MailIcon className="mt-0.5 text-xl flex-none text-accent" />
               <div>
                 <p className="text-sm font-semibold">E-mail</p>
                 <p className="text-sm text-text-muted">{email}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <WhatsappIcon className="mt-0.5 h-5 w-5 flex-none text-accent" />
+              <WhatsappIcon className="mt-0.5 text-xl flex-none text-accent" />
               <div>
                 <p className="text-sm font-semibold">WhatsApp</p>
                 <p className="text-sm text-text-muted">{whatsapp}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <PinIcon className="mt-0.5 h-5 w-5 flex-none text-accent" />
+              <PinIcon className="mt-0.5 text-xl flex-none text-accent" />
               <div>
                 <p className="text-sm font-semibold">Visite-nos</p>
                 <p className="text-sm text-text-muted">{address}</p>
@@ -398,7 +398,7 @@ function HomeContent() {
                 className="flex items-center gap-1 text-xs font-medium text-accent"
               >
                 Descubra mais devocionais
-                <ChevronRightIcon className="h-3.5 w-3.5" />
+                <ChevronRightIcon className="text-sm" />
               </Link>
             </div>
             <RevealStagger className="grid grid-cols-1 gap-5 sm:grid-cols-3">

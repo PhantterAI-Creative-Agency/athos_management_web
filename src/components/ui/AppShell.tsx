@@ -169,7 +169,7 @@ export function AppShell({
           {user ? (
             <>
               <Link href="/configuracoes" aria-label="Configurações">
-                <SettingsIcon className="h-5 w-5 text-foreground" />
+                <SettingsIcon className="text-xl text-foreground" />
               </Link>
               <Link
                 href="/perfil"
@@ -253,16 +253,7 @@ export function AppShell({
             className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 animate-bounce text-white/70 transition-colors hover:text-white"
             aria-label="Rolar para seção Sobre"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
+            <i className="fa-solid fa-chevron-down text-[2rem]" aria-hidden="true" />
           </button>
       </header>
       )}
@@ -284,7 +275,7 @@ export function AppShell({
                 isActive ? "text-accent" : "text-text-muted"
               }`}
             >
-              <Icon className="h-5 w-5" />
+              <Icon className="text-xl" />
               <span className={`label-caps ${isActive ? "font-semibold" : ""}`}>
                 {link.label}
               </span>

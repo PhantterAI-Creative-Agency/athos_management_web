@@ -32,7 +32,7 @@ function MenuSection({ title, links }: { title: string; links: { label: string; 
             className="flex items-center gap-3 border-b border-divider py-3 text-sm last:border-b-0"
           >
             <span className="flex-1">{link.label}</span>
-            <ChevronRightIcon className="h-3.5 w-3.5 text-text-muted" />
+            <ChevronRightIcon className="text-sm text-text-muted" />
           </Link>
         ))}
       </div>
@@ -79,7 +79,7 @@ export default function ConfiguracoesPage() {
               className="flex items-center gap-3 border-b border-divider py-3 text-sm"
             >
               <span className="flex-1">Meus Dados</span>
-              <ChevronRightIcon className="h-3.5 w-3.5 text-text-muted" />
+              <ChevronRightIcon className="text-sm text-text-muted" />
             </Link>
             <div className="flex items-center justify-between border-b border-divider py-3">
               <span className="text-sm">Notificações</span>

@@ -104,7 +104,7 @@ export function Footer() {
                     href={social.href}
                     className="flex items-center gap-2.5 text-sm text-white/60 hover:text-white"
                   >
-                    <social.icon className="h-4 w-4" />
+                    <social.icon className="text-base" />
                     {social.label}
                   </Link>
                 </li>

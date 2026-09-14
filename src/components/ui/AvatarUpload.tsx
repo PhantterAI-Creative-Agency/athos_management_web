@@ -96,7 +96,7 @@ export function AvatarUpload({
         />
 
         <span className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/40">
-          <CameraIcon className="h-6 w-6 text-white opacity-0 transition-opacity group-hover:opacity-100" />
+          <CameraIcon className="text-2xl text-white opacity-0 transition-opacity group-hover:opacity-100" />
         </span>
 
         {uploading && (
