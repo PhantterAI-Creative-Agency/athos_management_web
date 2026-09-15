@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AppShell } from "@/components/ui/AppShell";
 import { CoverImage } from "@/components/ui/CoverImage";
@@ -8,27 +8,54 @@ import { Tag } from "@/components/ui/Tag";
 import { AuthGuard } from "@/components/AuthGuard";
 import { useAuth } from "@/hooks/useAuth";
 import { listFriends, sendFriendRequest, acceptFriendRequest, removeFriend } from "@/api-client/friends";
+import { listFollows } from "@/api-client/follows";
+import { listUsers, type UserDTO } from "@/api-client/users";
 
 function ComunidadeContent() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
-  const [tab, setTab] = useState<"accepted" | "pending">("accepted");
+  const [tab, setTab] = useState<"accepted" | "pending" | "following">("accepted");
 
   const { data: friends } = useQuery({
     queryKey: ["friends", tab],
-    queryFn: () => listFriends(tab),
+    queryFn: () => listFriends(tab === "following" ? undefined : tab),
+    enabled: tab !== "following",
   });
+
+  const { data: following } = useQuery({
+    queryKey: ["follows", "following"],
+    queryFn: () => listFollows("following"),
+    enabled: tab === "following",
+  });
+
+  const { data: users } = useQuery({
+    queryKey: ["users", "church"],
+    queryFn: () => listUsers(),
+    enabled: !!user?.churchId,
+  });
+
+  const usersById = useMemo(() => {
+    const map = new Map<string, UserDTO>();
+    for (const u of users ?? []) map.set(u.id, u);
+    return map;
+  }, [users]);
 
   const removeMutation = useMutation({
     mutationFn: (id: string) => removeFriend(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["friends"] }),
   });
 
-  const friendsAsUser = friends?.filter((f) => f.friendId !== user?.id) || [];
-  const friendsAsFriend = friends?.filter((f) => f.friendId === user?.id) || [];
-  const pendingSent = friendsAsFriend.filter((f) => f.status === "pending");
-  const pendingReceived = friendsAsUser.filter((f) => f.status === "pending");
+  const acceptMutation = useMutation({
+    mutationFn: (id: string) => acceptFriendRequest(id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["friends"] }),
+  });
+
+  const pendingReceived = friends?.filter((f) => f.status === "pending" && f.friendId === user?.id) || [];
+  const pendingSent = friends?.filter((f) => f.status === "pending" && f.userId === user?.id) || [];
   const accepted = friends?.filter((f) => f.status === "accepted") || [];
+  const followingList = (following || [])
+    .map((f) => usersById.get(f.followingId))
+    .filter((u): u is UserDTO => !!u);
 
   return (
     <div className="mx-auto max-w-3xl px-5 pb-10 pt-6 md:max-w-2xl md:px-12 md:py-10">
@@ -50,6 +77,13 @@ function ComunidadeContent() {
         >
           Convites
         </button>
+        <button
+          type="button"
+          onClick={() => setTab("following")}
+          className={`rounded-full px-4 py-1.5 text-sm font-medium ${tab === "following" ? "bg-accent text-white" : "bg-surface"}`}
+        >
+          Seguindo
+        </button>
       </div>
 
       {tab === "pending" && (
@@ -60,15 +94,25 @@ function ComunidadeContent() {
                 Recebidos
               </h3>
               <div className="mb-6 flex flex-col gap-2">
-                {pendingReceived.map((f) => (
-                  <div key={f.id} className="flex items-center justify-between rounded-xl bg-surface p-3">
-                    <div className="flex items-center gap-3">
-                      <CoverImage label="Usuário" seed={`friend-${f.userId}`} className="h-10 w-10 rounded-full" />
-                      <p className="text-sm font-medium">Membro</p>
+                {pendingReceived.map((f) => {
+                  const other = usersById.get(f.userId);
+                  return (
+                    <div key={f.id} className="flex items-center justify-between rounded-xl bg-surface p-3">
+                      <div className="flex items-center gap-3">
+                        <CoverImage label={other?.name ?? "Membro"} seed={`friend-${f.userId}`} className="h-10 w-10 rounded-full" />
+                        <p className="text-sm font-medium">{other?.name ?? "Membro"}</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => acceptMutation.mutate(f.id)}
+                        disabled={acceptMutation.isPending && acceptMutation.variables === f.id}
+                        className="rounded-full bg-accent px-3 py-1 text-xs font-medium text-white disabled:opacity-50"
+                      >
+                        Aceitar
+                      </button>
                     </div>
-                    <Tag>Pendente</Tag>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </>
           )}
@@ -79,15 +123,18 @@ function ComunidadeContent() {
                 Enviados
               </h3>
               <div className="flex flex-col gap-2">
-                {pendingSent.map((f) => (
-                  <div key={f.id} className="flex items-center justify-between rounded-xl bg-surface p-3">
-                    <div className="flex items-center gap-3">
-                      <CoverImage label="Usuário" seed={`friend-${f.friendId}`} className="h-10 w-10 rounded-full" />
-                      <p className="text-sm font-medium">Membro</p>
+                {pendingSent.map((f) => {
+                  const other = usersById.get(f.friendId);
+                  return (
+                    <div key={f.id} className="flex items-center justify-between rounded-xl bg-surface p-3">
+                      <div className="flex items-center gap-3">
+                        <CoverImage label={other?.name ?? "Membro"} seed={`friend-${f.friendId}`} className="h-10 w-10 rounded-full" />
+                        <p className="text-sm font-medium">{other?.name ?? "Membro"}</p>
+                      </div>
+                      <Tag>Aguardando</Tag>
                     </div>
-                    <Tag>Aguardando</Tag>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </>
           )}
@@ -104,12 +151,13 @@ function ComunidadeContent() {
             <div className="flex flex-col gap-2">
               {accepted.map((f) => {
                 const otherId = f.userId === user?.id ? f.friendId : f.userId;
+                const other = usersById.get(otherId);
                 return (
                   <div key={f.id} className="flex items-center justify-between rounded-xl bg-surface p-3">
                     <div className="flex items-center gap-3">
-                      <CoverImage label="Amigo" seed={`friend-${otherId}`} className="h-10 w-10 rounded-full" />
+                      <CoverImage label={other?.name ?? "Amigo"} seed={`friend-${otherId}`} className="h-10 w-10 rounded-full" />
                       <div>
-                        <p className="text-sm font-medium">Membro</p>
+                        <p className="text-sm font-medium">{other?.name ?? "Membro"}</p>
                         {f.mutualFriendsCount > 0 && (
                           <p className="text-[10px] text-text-muted">{f.mutualFriendsCount} amigos em comum</p>
                         )}
@@ -129,6 +177,25 @@ function ComunidadeContent() {
           ) : (
             <p className="text-center text-sm text-text-muted">
               Nenhum amigo ainda. Conecte-se com outros membros!
+            </p>
+          )}
+        </>
+      )}
+
+      {tab === "following" && (
+        <>
+          {followingList.length > 0 ? (
+            <div className="flex flex-col gap-2">
+              {followingList.map((u) => (
+                <div key={u.id} className="flex items-center gap-3 rounded-xl bg-surface p-3">
+                  <CoverImage label={u.name} seed={`user-${u.id}`} className="h-10 w-10 rounded-full" />
+                  <p className="text-sm font-medium">{u.name}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-sm text-text-muted">
+              Você ainda não está seguindo ninguém
             </p>
           )}
         </>
