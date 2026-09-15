@@ -35,7 +35,7 @@ export function MemberHoverCard({
 
   function show(e: MouseEvent) {
     if (hideTimeout.current) clearTimeout(hideTimeout.current);
-    setPosition({ x: e.clientX, y: e.clientY });
+    setPosition((current) => current ?? { x: e.clientX, y: e.clientY });
   }
 
   function scheduleHide() {
@@ -69,7 +69,6 @@ export function MemberHoverCard({
     <span
       className="relative inline-flex items-center gap-2"
       onMouseEnter={show}
-      onMouseMove={show}
       onMouseLeave={scheduleHide}
     >
       {children}
