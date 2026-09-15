@@ -1,16 +1,23 @@
 import { api } from "./client";
 
+export type MuralFriendshipRelationStatus = "none" | "pending_sent" | "pending_received" | "accepted";
+
 export interface MuralPostDTO {
   id: string;
   churchId: string;
   authorType: "user" | "church";
   authorId: string;
+  authorName?: string;
+  authorPhotoUrl?: string;
   content: string;
   audience: "all" | "ministry" | "growthGroup";
   audienceRefId?: string;
+  visibility: "public" | "private";
   likesCount: number;
   commentsCount: number;
   liked: boolean;
+  viewerFollowsAuthor?: boolean;
+  viewerFriendshipStatus?: MuralFriendshipRelationStatus;
   createdAt: string;
 }
 
@@ -36,6 +43,7 @@ export function createMuralPost(data: {
   authorType?: "user" | "church";
   audience?: "all" | "ministry" | "growthGroup";
   audienceRefId?: string;
+  visibility?: "public" | "private";
 }): Promise<MuralPostDTO> {
   return api.post<MuralPostDTO>("/mural", data);
 }
