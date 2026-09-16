@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
+import { useChurchSettings } from "@/hooks/useChurchSettings";
 import {
   getPublicRandomAd,
   getRandomAd,
@@ -13,13 +14,19 @@ import {
 
 const CHURCH_SLUG = process.env.NEXT_PUBLIC_CHURCH_SLUG ?? "principios-de-vida";
 
-export function useAd(placement: string, format: AdFormat): { ad: AdDTO | null; registerClick: () => void } {
+export function useAd(
+  placement: string,
+  format: AdFormat,
+): { ad: AdDTO | null; registerClick: () => void; enabled: boolean } {
   const { user } = useAuth();
+  const { adsEnabled, disabledAdPlacements } = useChurchSettings();
+  const enabled = adsEnabled && !disabledAdPlacements.includes(placement);
 
   const { data: ad } = useQuery({
     queryKey: ["ads", "random", placement, format, user?.id],
     queryFn: () =>
       user ? getRandomAd(placement, format) : getPublicRandomAd(CHURCH_SLUG, placement, format),
+    enabled,
   });
 
   function registerClick() {
@@ -31,5 +38,5 @@ export function useAd(placement: string, format: AdFormat): { ad: AdDTO | null; 
     }
   }
 
-  return { ad: ad ?? null, registerClick };
+  return { ad: enabled ? (ad ?? null) : null, registerClick, enabled };
 }
