@@ -10,6 +10,7 @@ import {
   MegaphoneIcon,
   RadioIcon,
   SettingsIcon,
+  UserPlusIcon,
   UsersIcon,
 } from "@/components/icons";
 
@@ -28,6 +29,7 @@ export function AdminSidebar({
     { label: "Conteúdo da Home", href: `${base}/home`, icon: HomeIcon },
     { label: "Eventos", href: `${base}/eventos`, icon: CalendarIcon },
     { label: "Ministérios", href: `${base}/ministerios`, icon: UsersIcon },
+    { label: "Usuários", href: `${base}/usuarios`, icon: UserPlusIcon },
     { label: "Reunião nos Lares", href: `${base}/reuniao-nos-lares`, icon: HeartIcon },
     { label: "Devocionais", href: `${base}/devocionais`, icon: BookIcon },
     { label: "Mídias", href: `${base}/midias`, icon: CameraIcon },
