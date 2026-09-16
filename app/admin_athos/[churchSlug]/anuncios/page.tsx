@@ -4,10 +4,13 @@ import { use } from "react";
 import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteAd, listAds, updateAd } from "@/api-client/ads";
+import { getMyChurch, updateMyChurch } from "@/api-client/churches";
 
 const PLACEMENT_LABELS: Record<string, string> = {
   home_hero: "Home — Banner principal",
+  home_cultos: "Home — Cultos",
   home_grid: "Home — Grade",
+  home_devocionais: "Home — Devocionais",
   eventos_grid: "Eventos",
   midias_grid: "Mídias",
   devocionais_grid: "Devocionais",
@@ -27,6 +30,11 @@ export default function AdminAdsPage({
     queryFn: () => listAds(),
   });
 
+  const { data: church } = useQuery({
+    queryKey: ["churches", "me"],
+    queryFn: getMyChurch,
+  });
+
   const toggleActive = useMutation({
     mutationFn: (vars: { id: string; active: boolean }) => updateAd(vars.id, { active: vars.active }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["ads"] }),
@@ -36,6 +44,25 @@ export default function AdminAdsPage({
     mutationFn: (id: string) => deleteAd(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["ads"] }),
   });
+
+  const toggleAdsEnabled = useMutation({
+    mutationFn: (adsEnabled: boolean) => updateMyChurch({ settings: { adsEnabled } }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["churches", "me"] }),
+  });
+
+  const togglePlacement = useMutation({
+    mutationFn: (vars: { placement: string; disabled: boolean }) => {
+      const current = church?.settings.disabledAdPlacements ?? [];
+      const disabledAdPlacements = vars.disabled
+        ? [...current, vars.placement]
+        : current.filter((placement) => placement !== vars.placement);
+      return updateMyChurch({ settings: { disabledAdPlacements } });
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["churches", "me"] }),
+  });
+
+  const adsEnabled = church?.settings.adsEnabled ?? true;
+  const disabledAdPlacements = church?.settings.disabledAdPlacements ?? [];
 
   return (
     <div className="mx-auto max-w-3xl">
@@ -47,6 +74,39 @@ export default function AdminAdsPage({
         >
           Novo Anúncio
         </Link>
+      </div>
+
+      <div className="mb-5 flex items-center justify-between rounded-2xl bg-surface p-4">
+        <div>
+          <p className="text-sm font-semibold">Desativar todos os anúncios</p>
+          <p className="text-xs text-text-muted">Remove todos os anúncios e espaços de anúncio da página</p>
+        </div>
+        <label className="flex items-center gap-1.5 text-xs text-text-muted">
+          <input
+            type="checkbox"
+            checked={!adsEnabled}
+            onChange={(e) => toggleAdsEnabled.mutate(!e.target.checked)}
+          />
+          Desativado
+        </label>
+      </div>
+
+      <div className="mb-5 flex flex-col gap-3 rounded-2xl bg-surface p-4">
+        <p className="text-sm font-semibold">Seções de anúncio</p>
+        {Object.entries(PLACEMENT_LABELS).map(([placement, label]) => (
+          <div key={placement} className="flex items-center justify-between">
+            <span className="text-xs text-text-muted">{label}</span>
+            <label className="flex items-center gap-1.5 text-xs text-text-muted">
+              <input
+                type="checkbox"
+                checked={!disabledAdPlacements.includes(placement)}
+                disabled={!adsEnabled}
+                onChange={(e) => togglePlacement.mutate({ placement, disabled: !e.target.checked })}
+              />
+              Ativo
+            </label>
+          </div>
+        ))}
       </div>
 
       {isLoading && <p className="text-sm text-text-muted">Carregando...</p>}

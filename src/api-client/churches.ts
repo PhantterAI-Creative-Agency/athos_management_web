@@ -39,6 +39,8 @@ export interface ChurchSettingsDTO {
   primaryColor: string;
   growthGroupName: string;
   growthGroupAcronym: string;
+  adsEnabled: boolean;
+  disabledAdPlacements: string[];
 }
 
 export interface ChurchServiceScheduleDTO {

@@ -13,13 +13,17 @@ export function AdSlot({
   format: AdFormat;
   className?: string;
 }) {
-  const { ad, registerClick } = useAd(placement, format);
+  const { ad, registerClick, enabled } = useAd(placement, format);
 
   const ratioClass = className.includes("aspect-")
     ? ""
     : format === "slide"
       ? "aspect-[1200/450]"
       : "aspect-square";
+
+  if (!enabled) {
+    return null;
+  }
 
   if (!ad) {
     return (
