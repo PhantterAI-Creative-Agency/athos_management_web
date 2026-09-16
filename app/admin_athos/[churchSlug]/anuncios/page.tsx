@@ -3,8 +3,7 @@
 import { use } from "react";
 import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteAd, listAds, updateAd } from "@/api-client/ads";
-import { getMyChurch, updateMyChurch } from "@/api-client/churches";
+import { deleteAd, getAdsSettings, listAds, updateAd, updateAdsSettings } from "@/api-client/ads";
 
 const PLACEMENT_LABELS: Record<string, string> = {
   home_hero: "Home — Banner principal",
@@ -30,9 +29,9 @@ export default function AdminAdsPage({
     queryFn: () => listAds(),
   });
 
-  const { data: church } = useQuery({
-    queryKey: ["churches", "me"],
-    queryFn: getMyChurch,
+  const { data: adsSettings } = useQuery({
+    queryKey: ["ads", "settings"],
+    queryFn: getAdsSettings,
   });
 
   const toggleActive = useMutation({
@@ -46,23 +45,23 @@ export default function AdminAdsPage({
   });
 
   const toggleAdsEnabled = useMutation({
-    mutationFn: (adsEnabled: boolean) => updateMyChurch({ settings: { adsEnabled } }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["churches", "me"] }),
+    mutationFn: (adsEnabled: boolean) => updateAdsSettings({ adsEnabled }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["ads", "settings"] }),
   });
 
   const togglePlacement = useMutation({
     mutationFn: (vars: { placement: string; disabled: boolean }) => {
-      const current = church?.settings.disabledAdPlacements ?? [];
+      const current = adsSettings?.disabledAdPlacements ?? [];
       const disabledAdPlacements = vars.disabled
         ? [...current, vars.placement]
         : current.filter((placement) => placement !== vars.placement);
-      return updateMyChurch({ settings: { disabledAdPlacements } });
+      return updateAdsSettings({ disabledAdPlacements });
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["churches", "me"] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["ads", "settings"] }),
   });
 
-  const adsEnabled = church?.settings.adsEnabled ?? true;
-  const disabledAdPlacements = church?.settings.disabledAdPlacements ?? [];
+  const adsEnabled = adsSettings?.adsEnabled ?? true;
+  const disabledAdPlacements = adsSettings?.disabledAdPlacements ?? [];
 
   return (
     <div className="mx-auto max-w-3xl">

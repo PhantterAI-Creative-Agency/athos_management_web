@@ -31,6 +31,19 @@ export interface AdInputDTO {
   order?: number;
 }
 
+export interface AdsSettingsDTO {
+  adsEnabled: boolean;
+  disabledAdPlacements: string[];
+}
+
+export function getAdsSettings(): Promise<AdsSettingsDTO> {
+  return api.get<AdsSettingsDTO>("/ads/settings");
+}
+
+export function updateAdsSettings(data: Partial<AdsSettingsDTO>): Promise<AdsSettingsDTO> {
+  return api.patch<AdsSettingsDTO>("/ads/settings", data);
+}
+
 export function listAds(): Promise<AdDTO[]> {
   return api.get<AdDTO[]>("/ads");
 }
