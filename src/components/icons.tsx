@@ -41,3 +41,4 @@ export const YoutubeIcon = fa("brands", "youtube");
 export const AppleMusicIcon = fa("brands", "itunes-note");
 export const CameraIcon = fa("solid", "camera");
 export const SpotifyIcon = fa("brands", "spotify");
+export const UserPlusIcon = fa("solid", "user-plus");
