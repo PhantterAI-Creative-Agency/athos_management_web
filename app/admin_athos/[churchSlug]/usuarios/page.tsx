@@ -3,7 +3,10 @@
 import { use, useMemo, useState } from "react";
 import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { listUsers, updateUser } from "@/api-client/users";
+import { deleteInactiveUsers, listUsers, updateUser } from "@/api-client/users";
+import { ApiError } from "@/api-client/client";
+import { useAuth } from "@/hooks/useAuth";
+import { isDevAdmin } from "@/lib/rbac";
 
 type StatusFilter = "all" | "active" | "pending";
 
@@ -13,6 +16,7 @@ export default function AdminUsersPage({
   params: Promise<{ churchSlug: string }>;
 }) {
   const { churchSlug } = use(params);
+  const { user } = useAuth();
   const queryClient = useQueryClient();
   const [status, setStatus] = useState<StatusFilter>("all");
   const [search, setSearch] = useState("");
@@ -25,6 +29,17 @@ export default function AdminUsersPage({
   const toggleActive = useMutation({
     mutationFn: ({ id, active }: { id: string; active: boolean }) => updateUser(id, { active }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["users"] }),
+  });
+
+  const deleteInactive = useMutation({
+    mutationFn: () => deleteInactiveUsers(),
+    onSuccess: ({ deletedCount }) => {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      alert(`${deletedCount} usuário(s) inativo(s) excluído(s).`);
+    },
+    onError: (error) => {
+      alert(error instanceof ApiError ? error.message : "Erro ao excluir usuários inativos");
+    },
   });
 
   const filteredUsers = useMemo(() => {
@@ -43,12 +58,32 @@ export default function AdminUsersPage({
     <div className="mx-auto max-w-3xl">
       <div className="mb-5 flex items-center justify-between">
         <h2 className="text-2xl font-semibold">Usuários</h2>
-        <Link
-          href={`/admin_athos/${churchSlug}/usuarios/novo`}
-          className="label-caps rounded-full bg-accent px-5 py-2 text-background"
-        >
-          Novo Usuário
-        </Link>
+        <div className="flex items-center gap-3">
+          {isDevAdmin(user) && (
+            <button
+              type="button"
+              disabled={deleteInactive.isPending}
+              onClick={() => {
+                if (
+                  confirm(
+                    `Excluir TODOS os usuários inativos (${pendingCount})? Esta ação não pode ser desfeita.`,
+                  )
+                ) {
+                  deleteInactive.mutate();
+                }
+              }}
+              className="label-caps rounded-full bg-red-600 px-5 py-2 text-background disabled:opacity-50"
+            >
+              {deleteInactive.isPending ? "Excluindo..." : "Excluir Inativos"}
+            </button>
+          )}
+          <Link
+            href={`/admin_athos/${churchSlug}/usuarios/novo`}
+            className="label-caps rounded-full bg-accent px-5 py-2 text-background"
+          >
+            Novo Usuário
+          </Link>
+        </div>
       </div>
 
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

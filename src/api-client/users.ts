@@ -58,3 +58,7 @@ export function listUsers(params?: { churchId?: string }): Promise<UserDTO[]> {
 export function createChild(parentId: string, data: CreateChildDTO): Promise<UserDTO> {
   return api.post<UserDTO>(`/users/${parentId}/children`, data);
 }
+
+export function deleteInactiveUsers(): Promise<{ deletedCount: number }> {
+  return api.delete<{ deletedCount: number }>("/users/inactive");
+}
